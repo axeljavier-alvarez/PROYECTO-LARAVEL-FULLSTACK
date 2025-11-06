@@ -1,3 +1,5 @@
+@props(['breadcrumb' => []])
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -34,12 +36,17 @@ class="sm:overflow-auto">
 @include('layouts.includes.admin.sidebar')
 
 <div class="p-4 sm:ml-64">
-   <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+
+   <div class="mt-14">
+       @include('layouts.includes.admin.breadcrumb')
+   <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
       <div class="grid grid-cols-3 gap-4 mb-4">
          
         {{ $slot }}
       </div>
    </div>
+   </div>
+  
 </div>
 
 
