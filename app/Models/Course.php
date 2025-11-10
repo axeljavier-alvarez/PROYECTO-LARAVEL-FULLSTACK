@@ -4,6 +4,7 @@ namespace App\Models;
 use App\Enums\CourseStatus;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Storage;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,11 +18,12 @@ class Course extends Model
         'video_path', 'welcome_message',
         'goodbye_message', 'observation',
         'user_id', 'level_id', 'category_id',
-        'price_id'
+        'price_id', 'published_at'
     ];
 
     protected $casts = [
-        'status' => CourseStatus::class
+        'status' => CourseStatus::class,
+        'published_at' => 'datetime'
     ];
 
 
@@ -40,8 +42,6 @@ class Course extends Model
 
         );
     }
-
-
         /* Relaciones */
 
     public function teacher()
@@ -60,7 +60,9 @@ class Course extends Model
         return $this->belongsTo(Category::class);
     }
 
+
     public function price()
+    
     {
         return $this->belongsTo(Price::class);
     }

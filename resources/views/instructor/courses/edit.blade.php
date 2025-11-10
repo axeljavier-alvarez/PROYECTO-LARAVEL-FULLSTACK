@@ -29,6 +29,43 @@
         <div class="col-span-1 lg:col-span-4">
             <div class="card">
 
+                <form action="{{ route('instructor.courses.update', $course) }}"
+                method="POST"
+                ENCTYPE="multipart/form-data">
+
+                <!-- Metodo para pasar token -->
+                @csrf
+                @method('PUT')
+
+                <p class="text-2xl font-semibold">
+                    Información del curso
+                </p>
+
+                <hr class="mt-2 mb-6">
+
+                <x-validation-errors />
+
+                <div class="mb-4">
+                    <x-label value="Título del curso" class="mb-1"/>
+
+                    <x-input type="text" class="w-full" value="{{ old('title', $course->title) }}" name="title" />
+                </div>
+
+                @empty($course ->published_at)
+                <div class="mb-4">
+                    <x-label value="Slug del curso" class="mb-1"/>
+                    <x-input type="text" class="w-full" value="{{ old('slug', $course->slug) }}" name="slug" />
+                </div>
+
+                @endempty
+
+              <textarea name="" id="" cols="30" rows="10"></textarea>
+
+                
+
+                </form>
+
+
             </div>
         </div>
     </div>
