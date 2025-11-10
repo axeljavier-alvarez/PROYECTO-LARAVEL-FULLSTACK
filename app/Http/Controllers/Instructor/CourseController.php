@@ -72,7 +72,6 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        //
     }
 
     /**
@@ -80,7 +79,8 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        //
+    return view('instructor.courses.edit', compact('course'));
+
     }
 
     /**

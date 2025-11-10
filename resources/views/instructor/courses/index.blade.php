@@ -13,14 +13,14 @@
     </a>
 </div>
 <ul>
-    @foreach ($courses as $course)
+    @forelse ($courses as $course)
     <li class="bg-white rounded-lg shadow-lg overflow-hidden">
         <a href="{{ route('instructor.courses.edit', $course) }}" class="md:flex">
-            <figure class="flex-shrink-0">
-                <img src="{{ $course->image }}"
-     class="w-full md:w-[100px aspect-video md:aspect-square object-cover object-center">
+            <figure class="flex-shrink-0 w-full md:w-32 aspect-video md:aspect-square">
+    <img src="{{ $course->image }}"
+         class="w-full h-full object-cover object-center">
+</figure>
 
-            </figure>
         <div class="flex-1">
 
             <div class="py-4 px-8">
@@ -101,7 +101,21 @@
         </a>
     </li>
 
-    @endforeach
+    @empty
+
+    <li class="bg-white rounded-lg shadow-lg p-6">
+        <div class="flex justify-between items-center">
+            <p>
+                Salta a la creación de un curso
+            </p>
+
+            <a href="{{ route('instructor.courses.create') }}" class="btn btn-blue">
+                Crea tu curso
+            </a>
+        </div>
+    </li>
+
+    @endforelse
 </ul>
 </x-container>
 
