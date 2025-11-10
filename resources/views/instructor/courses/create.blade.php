@@ -26,7 +26,8 @@
                 <x-input placeholder="Nombre del curso"
                 class="w-full"
                 name="title"
-                value="{{ old('title')}}"/>
+                value="{{ old('title')}}"
+                oninput="string_to_slug(this.value, '#slug')"/>
 
             </div>
 
@@ -34,7 +35,9 @@
                 <x-label class="mb-1">
                 Slug
                 </x-label>
-                <x-input placeholder="Slug del curso"
+                <x-input
+                id="slug"
+                placeholder="Slug del curso"
                 class="w-full"
                 name="slug"
                 value="{{ old('slug')}}"/>
