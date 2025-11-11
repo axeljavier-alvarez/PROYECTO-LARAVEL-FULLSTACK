@@ -59,9 +59,106 @@
 
                 @endempty
 
-              <textarea name="" id="" cols="30" rows="10"></textarea>
+                <div class="mb-4">
+                    <x-label value="Descripción del curso" class="mb-1"/>
+                <x-textarea class="w-full" name="summary">{{ old('summary', $course->summary) }}</x-textarea>
+                </div>
 
-                
+                <!-- FORMULARIO-->
+
+                 <div class="grid md:grid-cols-3 gap-4 mb-8">
+                <div>
+                    <x-label class="mb-1">
+                        Categorías
+                    </x-label>
+                    <x-select name="category_id" class="w-full">
+                        @foreach ( $categories as $category )
+                        <option value="{{ $category->id }}"
+                            @selected(old('category_id', $course->category_id) == $category->id
+                            )>
+                            {{ $category -> name }}
+                        </option>
+                        @endforeach
+                    </x-select>
+                </div>
+
+
+                <div>
+                    <x-label class="mb-1">
+                        Niveles
+                    </x-label>
+                    <x-select name="level_id" class="w-full">
+                        @foreach ( $levels as $level )
+                        <option value="{{ $level->id }}"
+                            @selected(old('level_id', $course) == $level->level_id)>
+                            {{ $level -> name }}
+                        </option>
+                        @endforeach
+                    </x-select>
+                </div>
+
+
+                 <div>
+                    <x-label class="mb-1">
+                        Precios
+                    </x-label>
+
+                    <x-select name="price_id" class="w-full">
+                        @foreach ( $prices as $price )
+                        <option value="{{ $price->id }}"
+                            @selected(old('price_id', $course->price_id) == $price->id)>
+
+                            @if ($price -> value == 0)
+                            Gratis
+                            @else
+                            {{ $price -> value }} US$ (nivel {{ $loop->index}})
+
+                            @endif
+
+                        </option>
+                        @endforeach
+                    </x-select>
+                </div>
+
+            </div>
+
+            <div>
+                <p class="text-2xl font-semibold mb-2">
+                    Imagen del curso
+                </p>
+            </div>
+
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <figure>
+                    <img class="w-full aspect-video object-cover object-center" src="{{ $course->image }}" alt="">
+                </figure>
+
+                <div>
+                   <p class="mb-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ad iusto distinctio placeat magni minima error architecto tenetur voluptates accusantium impedit, voluptatum accusamus nisi eos rerum quae dolorem porro modi optio!</p>
+
+                   <label>
+                    <span class="btn btn-blue md:hidden cursor-pointer">
+                        Seleccionar una imagen
+                    </span>
+                   <input class="hidden md:block" type="file"
+                   accept="image/*" name="image">
+                   </label>
+
+
+                   <div class="flex justify-end mt-4">
+                           <x-button>
+                        Guardar cambios
+                    </x-button>
+                   </div>
+             
+                </div>
+
+            </div>
+        </div>
+
+            </div>
+
 
                 </form>
 
