@@ -31,7 +31,7 @@
 
                 <form action="{{ route('instructor.courses.update', $course) }}"
                 method="POST"
-                ENCTYPE="multipart/form-data">
+                enctype="multipart/form-data">
 
                 <!-- Metodo para pasar token -->
                 @csrf
@@ -40,11 +40,8 @@
                 <p class="text-2xl font-semibold">
                     Información del curso
                 </p>
-
                 <hr class="mt-2 mb-6">
-
                 <x-validation-errors />
-
                 <div class="mb-4">
                     <x-label value="Título del curso" class="mb-1"/>
 
@@ -60,9 +57,15 @@
                 @endempty
 
                 <div class="mb-4">
-                    <x-label value="Descripción del curso" class="mb-1"/>
-                <x-textarea class="w-full" name="summary">{{ old('summary', $course->summary) }}</x-textarea>
+                    <x-label value="Resumen" class="mb-1"/>
+                <x-textarea id="editor" class="w-full" name="summary">{{ old('summary', $course->summary) }}</x-textarea>
                 </div>
+
+                <div class="mb-4 ckeditor">
+                    <x-label value="Descripción" class="mb-1"/>
+                    <x-textarea id="editor" class="w-full" name="description">{{ old('description', $course->description) }}</x-textarea>
+                </div>
+
 
                 <!-- FORMULARIO-->
 
@@ -134,6 +137,10 @@
                     <img class="w-full aspect-video object-cover object-center" src="{{ $course->image }}" alt="">
                 </figure>
 
+                <p>{{ $course->image }}</p>
+
+                
+
                 <div>
                    <p class="mb-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ad iusto distinctio placeat magni minima error architecto tenetur voluptates accusantium impedit, voluptatum accusamus nisi eos rerum quae dolorem porro modi optio!</p>
 
@@ -156,10 +163,7 @@
 
             </div>
         </div>
-
             </div>
-
-
                 </form>
 
 
@@ -167,7 +171,20 @@
         </div>
     </div>
     </x-container>
-   
 
+    @push('js')
+    <script src="{{ asset('vendor/ckeditor5-build-classic/build/ckeditor.js') }}"></script>
+
+    <script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+    </script>
+
+
+    @endpush
 
 </x-instructor-layout>
+

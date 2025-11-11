@@ -4,8 +4,7 @@ namespace App\Models;
 use App\Enums\CourseStatus;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\Storage;
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
@@ -30,18 +29,23 @@ class Course extends Model
     /* recuperar al usuario */
     /* usuarios que crean curso y los que se matriculan */
     /* uno a muchos*/
-    protected function image():Attribute
+  
+  protected function image(): Attribute
+{
+    return new Attribute(
+        get: fn() => $this->image_path
+            ? asset('storage/' . $this->image_path)
+            : 'https://cdn-icons-png.flaticon.com/512/8344/8344917.png'
+    );
+}
 
-    {
-        return new Attribute(
-            get: function()
-            {
-                return $this->image_path ? Storage::url($this->image_path)
-                : 'https://cdn-icons-png.flaticon.com/512/8344/8344917.png';
-            }
+    
 
-        );
-    }
+
+
+
+
+    
         /* Relaciones */
 
     public function teacher()
