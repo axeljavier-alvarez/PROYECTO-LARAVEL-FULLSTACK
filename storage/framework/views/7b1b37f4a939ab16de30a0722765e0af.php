@@ -58,7 +58,18 @@ unset($__defined_vars, $__key, $__value); ?>
 <?php endif; ?>
 <?php $component->withAttributes(['class' => 'py-8']); ?>
 
-    <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+  <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginala766c2d312d6f7864fe218e2500d2bba)): ?>
+<?php $attributes = $__attributesOriginala766c2d312d6f7864fe218e2500d2bba; ?>
+<?php unset($__attributesOriginala766c2d312d6f7864fe218e2500d2bba); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginala766c2d312d6f7864fe218e2500d2bba)): ?>
+<?php $component = $__componentOriginala766c2d312d6f7864fe218e2500d2bba; ?>
+<?php unset($__componentOriginala766c2d312d6f7864fe218e2500d2bba); ?>
+<?php endif; ?>
+
+<div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
 
         <aside class="col-span-1">
 
@@ -93,17 +104,4 @@ unset($__defined_vars, $__key, $__value); ?>
 
             </div>
         </div>
-
-        
-  <?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginala766c2d312d6f7864fe218e2500d2bba)): ?>
-<?php $attributes = $__attributesOriginala766c2d312d6f7864fe218e2500d2bba; ?>
-<?php unset($__attributesOriginala766c2d312d6f7864fe218e2500d2bba); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginala766c2d312d6f7864fe218e2500d2bba)): ?>
-<?php $component = $__componentOriginala766c2d312d6f7864fe218e2500d2bba; ?>
-<?php unset($__componentOriginala766c2d312d6f7864fe218e2500d2bba); ?>
-<?php endif; ?>
-
 <?php /**PATH C:\laragon\www\codersfree\resources\views/components/instructor/course-sidebar.blade.php ENDPATH**/ ?>

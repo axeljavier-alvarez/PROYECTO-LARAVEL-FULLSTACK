@@ -12,13 +12,14 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <script src="https://kit.fontawesome.com/e2d71e4ca2.js" crossorigin="anonymous"></script>
 
-        <!-- Scripts -->
-        <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
-
         <!-- Styles -->
         <?php echo \Livewire\Mechanisms\FrontendAssets\FrontendAssets::styles(); ?>
 
+
+        <!-- Scripts -->
+        <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
     </head>
+
     <body class="font-sans antialiased">
         <?php if (isset($component)) { $__componentOriginalff9615640ecc9fe720b9f7641382872b = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalff9615640ecc9fe720b9f7641382872b = $attributes; } ?>
@@ -59,17 +60,15 @@ unset($__split);
 if (isset($__slots)) unset($__slots);
 ?>
 
-            <!-- Page Heading -->
             <?php if(isset($header)): ?>
                 <header class="bg-white shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         <?php echo e($header); ?>
 
-                    </div>   
+                    </div>
                 </header>
             <?php endif; ?>
 
-            <!-- Page Content -->
             <main>
                 <?php echo e($slot); ?>
 
@@ -80,9 +79,11 @@ if (isset($__slots)) unset($__slots);
 
         <?php echo $__env->yieldPushContent('modals'); ?>
 
-        <?php echo \Livewire\Mechanisms\FrontendAssets\FrontendAssets::styles(); ?>
-
         
+        <?php echo \Livewire\Mechanisms\FrontendAssets\FrontendAssets::scripts(); ?>
+
+
+        <?php echo $__env->yieldPushContent('js'); ?>
     </body>
 </html>
 <?php /**PATH C:\laragon\www\codersfree\resources\views/layouts/app.blade.php ENDPATH**/ ?>

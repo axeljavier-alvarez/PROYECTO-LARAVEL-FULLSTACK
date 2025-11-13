@@ -21,4 +21,11 @@ class PromotionalVideo extends Component
     {
         return view('livewire.instructor.courses.promotional-video');
     }
+
+    public function updatedVideo()
+{
+    dd('Archivo detectado:', $this->video);
+}
+
+
 }

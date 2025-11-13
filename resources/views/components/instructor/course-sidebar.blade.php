@@ -21,7 +21,9 @@
 
  <x-container class="py-8">
 
-    <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+ </x-container>
+
+<div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
 
         <aside class="col-span-1">
 
@@ -54,7 +56,3 @@
 
             </div>
         </div>
-
-        
- </x-container>
-
