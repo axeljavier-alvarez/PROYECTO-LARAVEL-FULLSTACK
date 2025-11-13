@@ -16,3 +16,4 @@ Route::resource(
     'courses', CourseController ::class
 );
 
+Route::get('course/{course}/video', [CourseController::class, 'video'])->name('courses.video');

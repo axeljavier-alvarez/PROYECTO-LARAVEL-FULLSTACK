@@ -131,4 +131,9 @@ class CourseController extends Controller
     {
         //
     }
+
+    public function video(Course $course)
+    {
+        return view('instructor.courses.video', compact('course'));
+    }
 }

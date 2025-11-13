@@ -17,37 +17,22 @@
         </h2>
      <?php $__env->endSlot(); ?>
 
-    <?php if (isset($component)) { $__componentOriginala766c2d312d6f7864fe218e2500d2bba = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginala766c2d312d6f7864fe218e2500d2bba = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.container','data' => ['class' => 'py-8']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('container'); ?>
+
+        
+
+    <?php if (isset($component)) { $__componentOriginal27ffdbad351dfa2def04bc9177485476 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal27ffdbad351dfa2def04bc9177485476 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.instructor.course-sidebar','data' => ['course' => $course]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('instructor.course-sidebar'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['class' => 'py-8']); ?>
-         <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+<?php $component->withAttributes(['course' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($course)]); ?>
 
-        <aside class="col-span-1">
 
-            <h1 class="font-semibold text-xl mb-4">
-                Edición del curso
-            </h1>
-            <nav>
-                <ul>
-                    <li class="border-l-4 border-indigo-400 pl-3">
-                        <a href="<?php echo e(route('instructor.courses.edit', $course)); ?>">
-                            Información del curso
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </aside>
-
-        <div class="col-span-1 lg:col-span-4">
-            <div class="card">
-
+        
                 <form action="<?php echo e(route('instructor.courses.update', $course)); ?>"
                 method="POST"
                 enctype="multipart/form-data">
@@ -432,10 +417,11 @@
 
             <div class="grid md:grid-cols-2 gap-4">
                 <figure>
-                    <img class="w-full aspect-video object-cover object-center" src="<?php echo e($course->image); ?>" alt="">
+                    <img id="imgPreview" class="w-full aspect-video object-cover object-center" src="<?php echo e($course->image); ?>" alt="">
                 </figure>
 
-                <p><?php echo e($course->image); ?></p>
+                <!-- <p><?php echo e($course->image); ?></p> -->
+                
 
                 
 
@@ -447,7 +433,7 @@
                         Seleccionar una imagen
                     </span>
                    <input class="hidden md:block" type="file"
-                   accept="image/*" name="image">
+                   accept="image/*" name="image" onChange="preview_image(event, '#imgPreview')">
                    </label>
 
 
@@ -483,19 +469,17 @@
                 </form>
 
 
-            </div>
-        </div>
-    </div>
      <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
-<?php if (isset($__attributesOriginala766c2d312d6f7864fe218e2500d2bba)): ?>
-<?php $attributes = $__attributesOriginala766c2d312d6f7864fe218e2500d2bba; ?>
-<?php unset($__attributesOriginala766c2d312d6f7864fe218e2500d2bba); ?>
+<?php if (isset($__attributesOriginal27ffdbad351dfa2def04bc9177485476)): ?>
+<?php $attributes = $__attributesOriginal27ffdbad351dfa2def04bc9177485476; ?>
+<?php unset($__attributesOriginal27ffdbad351dfa2def04bc9177485476); ?>
 <?php endif; ?>
-<?php if (isset($__componentOriginala766c2d312d6f7864fe218e2500d2bba)): ?>
-<?php $component = $__componentOriginala766c2d312d6f7864fe218e2500d2bba; ?>
-<?php unset($__componentOriginala766c2d312d6f7864fe218e2500d2bba); ?>
+<?php if (isset($__componentOriginal27ffdbad351dfa2def04bc9177485476)): ?>
+<?php $component = $__componentOriginal27ffdbad351dfa2def04bc9177485476; ?>
+<?php unset($__componentOriginal27ffdbad351dfa2def04bc9177485476); ?>
 <?php endif; ?>
+      
 
     <?php $__env->startPush('js'); ?>
     <script src="<?php echo e(asset('vendor/ckeditor5-build-classic/build/ckeditor.js')); ?>"></script>
