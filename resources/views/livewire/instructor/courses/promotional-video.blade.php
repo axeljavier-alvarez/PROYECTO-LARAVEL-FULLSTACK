@@ -4,23 +4,48 @@
 
     <hr class="mt-2 mb-6">
 
-<div class="grid grid-cols-2 gap-6">
+    <div class="grid grid-cols-2 gap-6">
 
         <div class="col-span-1">
+
             @if($course->video_path)
 
-            @else
-            <figure>
-                <img class="w-full aspect-video object-cover" src="{{ $course->image }}" alt="{{ $course->title }}">
-            </figure>
-            @endif
-        </div>
-        <div class="col-span-1">
-            <p class="mb-4">
-                Lorem ipsum dolor sit amet, consectetur
-            </p>
+                <video class="aspect-video" controls>
+                    <source src="{{ Storage::url($course->video_path) }}">
+                </video>
 
-            <x-progress-indicators wire:model="video"/>
+            @else
+
+                <figure>
+                    <img class="w-full aspect-video object-cover"
+                         src="{{ $course->image }}"
+                         alt="{{ $course->title }}">
+                </figure>
+
+            @endif
+
+        </div>
+
+
+        <div class="col-span-1">
+
+            <form wire:submit="save">
+
+                <x-validation-errors />
+
+                <p class="mb-4">
+                    Lorem ipsum dolor sit amet, consectetur.
+                </p>
+
+                <x-progress-indicators wire:model="video"/>
+
+                <div class="flex justify-end mt-4">
+                    <x-button>
+                        Subir video
+                    </x-button>
+                </div>
+
+            </form>
 
         </div>
 
