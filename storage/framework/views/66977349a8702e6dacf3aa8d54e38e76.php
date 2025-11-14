@@ -17,7 +17,7 @@
         </div>
         <div class="col-span-1">
             <p class="mb-4">
-                Lorem ipsum dolor sit amet, consectetur 
+                Lorem ipsum dolor sit amet, consectetur
             </p>
 
             <?php if (isset($component)) { $__componentOriginal8a2d84abbcfd50c549f3c043d4c4f9c9 = $component; } ?>
@@ -39,8 +39,8 @@
 <?php if (isset($__componentOriginal8a2d84abbcfd50c549f3c043d4c4f9c9)): ?>
 <?php $component = $__componentOriginal8a2d84abbcfd50c549f3c043d4c4f9c9; ?>
 <?php unset($__componentOriginal8a2d84abbcfd50c549f3c043d4c4f9c9); ?>
-<?php endif; ?>            
-            
+<?php endif; ?>
+
         </div>
 
     </div>

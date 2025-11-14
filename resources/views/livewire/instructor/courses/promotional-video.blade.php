@@ -17,11 +17,11 @@
         </div>
         <div class="col-span-1">
             <p class="mb-4">
-                Lorem ipsum dolor sit amet, consectetur 
+                Lorem ipsum dolor sit amet, consectetur
             </p>
 
-            <x-progress-indicators wire:model="video"/>            
-            
+            <x-progress-indicators wire:model="video"/>
+
         </div>
 
     </div>

@@ -3,7 +3,7 @@
 namespace App\Livewire\Instructor\Courses;
 
 use Livewire\Component;
-use Livewire\WithFileUploads;
+use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class PromotionalVideo extends Component
 {
@@ -16,16 +16,13 @@ class PromotionalVideo extends Component
 
     // almacenado el video que seleccionaremos
     public $video;
-    
+
     public function render()
     {
         return view('livewire.instructor.courses.promotional-video');
     }
 
-    public function updatedVideo()
-{
-    dd('Archivo detectado:', $this->video);
-}
+ 
 
 
 }
