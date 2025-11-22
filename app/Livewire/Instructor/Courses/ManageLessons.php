@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Livewire\Instructor\Courses;
+use App\Events\VideoUploaded;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -46,7 +47,7 @@ class ManageLessons extends Component
     }
 
 
-    
+
     public function store()
 {
     $this->validate();
@@ -75,6 +76,9 @@ class ManageLessons extends Component
             'platform' => 2,
             'video_original_name' => $this->url,
         ]);
+
+        // nueva linea 1
+        VideoUploaded::dispatch($lesson);
     }
 
     // Reset limpio
@@ -85,7 +89,7 @@ class ManageLessons extends Component
 
 
 
-    
+
 
 
     public function render()
