@@ -1,5 +1,19 @@
 <div>
 
+    <div class="mb-6">
+        <ul class="space-y-4">
+            @foreach ($lessons as $lesson)
+            <li wire:key="lesson-{{ $lesson->id }}">
+                <div class="bg-white rounded-lg shadow-lg px-6 py-4">
+                    <h1>
+                        <i class="fas fa-play-circle text-blue-600"></i>
+                        {{ $lesson->name }}
+                    </h1>
+                </div>
+            </li>
+            @endforeach
+        </ul>
+    </div>
     <div x-data="{
         open: @entangle('lessonCreate.open'),
         platform: @entangle('lessonCreate.platform'),

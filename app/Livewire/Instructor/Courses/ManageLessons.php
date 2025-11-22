@@ -13,7 +13,7 @@ class ManageLessons extends Component
     use WithFileUploads;
 
     public $section;
-    public $lesson;
+    public $lessons;
     public $video, $url;
 
     public $lessonCreate = [
@@ -67,6 +67,9 @@ class ManageLessons extends Component
             'video_original_name' => $this->lessonCreate['video_original_name'],
             'video_path' => $videoPath,
         ]);
+
+                VideoUploaded::dispatch($lesson);
+
 
     } else {
 

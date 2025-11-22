@@ -6,7 +6,7 @@ use App\Events\VideoUploaded;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class ProcessLessonVideo
+class ProcessLessonVideo implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -20,55 +20,59 @@ class ProcessLessonVideo
      * Handle the event.
      */
     public function handle(VideoUploaded $event): void
-    {
-            // $lesson = Lesson::find(1);
-            $lesson = $event->lesson;
+{
+    $lesson = $event->lesson;
 
-        if (!$lesson) {
-            return "La lección no existe";
-        }
+    if (!$lesson) {
+        \Log::warning("ProcessLessonVideo: la lección no existe.");
+        return;
+    }
 
-        // Si es URL de YouTube
-        if ($lesson->platform == 2) {
+    /**
+     * PLATFORM = 2 → YouTube
+     */
+    if ($lesson->platform == 2) {
 
-            // Regex para extraer el ID del video de YouTube
-            $patron = '%^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([\w\-]{10,12})%';
+        // Regex para extraer ID de YouTube
+        $patron = '%^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([\w\-]{10,12})%';
 
-            preg_match($patron, $lesson->video_original_name, $matches);
+        preg_match($patron, $lesson->video_original_name, $matches);
 
-            // Si se extrajo correctamente el ID
-            if (isset($matches[1])) {
+        if (isset($matches[1])) {
 
-                $videoId = $matches[1];
+            $videoId = $matches[1];
 
-                // video_path será el ID del video
-                $lesson->video_path = $videoId;
+            // Guardar ID como ruta
+            $lesson->video_path = $videoId;
 
-                // Miniatura de YouTube (la calidad media)
-                $lesson->image_path = "https://img.youtube.com/vi/{$videoId}/mqdefault.jpg";
+            // Miniatura de YouTube
+            $lesson->image_path = "https://img.youtube.com/vi/{$videoId}/mqdefault.jpg";
 
-                // Duración por defecto ya que no usas API
-                $lesson->duration = 1000;
-
-                // Marcamos como procesado
-                $lesson->is_processed = true;
-
-                $lesson->save();
-
-                return "Lección de YouTube procesada correctamente";
-            } else {
-                return "No se pudo extraer el ID del video de YouTube";
-            }
-
-        } else {
-
-            // Si el video es LOCAL (platform = 1), estableces valores por defecto
+            // Valor temporal (sin API YouTube)
             $lesson->duration = 1000;
-            $lesson->image_path = "courses/image/OOypdXH2we3xBEeQBMuWbPduoUok88VpC1Seh0bI.jpg";
+
             $lesson->is_processed = true;
             $lesson->save();
 
-            return "Lección local marcada como procesada";
+            \Log::info("ProcessLessonVideo: Lección YouTube procesada correctamente. ID: {$videoId}");
+        } else {
+
+            \Log::error("ProcessLessonVideo: No se pudo extraer el ID de YouTube para la lección {$lesson->id}");
         }
+
+        return; // No retorna valores, solo termina
     }
+
+    /**
+     * PLATFORM = 1 → Video local
+     */
+    // Si el video es local, establece valores por defecto
+    $lesson->duration = 1000;
+    $lesson->image_path = "courses/image/OOypdXH2we3xBEeQBMuWbPduoUok88VpC1Seh0bI.jpg";
+    $lesson->is_processed = true;
+    $lesson->save();
+
+    \Log::info("ProcessLessonVideo: Lección local procesada correctamente.");
+}
+
 }

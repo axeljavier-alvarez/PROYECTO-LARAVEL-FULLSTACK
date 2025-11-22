@@ -1,5 +1,20 @@
 <div>
 
+    <div class="mb-6">
+        <ul class="space-y-4">
+            <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $lessons; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lesson): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <li wire:key="lesson-<?php echo e($lesson->id); ?>">
+                <div class="bg-white rounded-lg shadow-lg px-6 py-4">
+                    <h1>
+                        <i class="fas fa-play-circle text-blue-600"></i>
+                        <?php echo e($lesson->name); ?>
+
+                    </h1>
+                </div>
+            </li>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+        </ul>
+    </div>
     <div x-data="{
         open: <?php if ((object) ('lessonCreate.open') instanceof \Livewire\WireDirective) : ?>window.Livewire.find('<?php echo e($__livewire->getId()); ?>').entangle('<?php echo e('lessonCreate.open'->value()); ?>')<?php echo e('lessonCreate.open'->hasModifier('live') ? '.live' : ''); ?><?php else : ?>window.Livewire.find('<?php echo e($__livewire->getId()); ?>').entangle('<?php echo e('lessonCreate.open'); ?>')<?php endif; ?>,
         platform: <?php if ((object) ('lessonCreate.platform') instanceof \Livewire\WireDirective) : ?>window.Livewire.find('<?php echo e($__livewire->getId()); ?>').entangle('<?php echo e('lessonCreate.platform'->value()); ?>')<?php echo e('lessonCreate.platform'->hasModifier('live') ? '.live' : ''); ?><?php else : ?>window.Livewire.find('<?php echo e($__livewire->getId()); ?>').entangle('<?php echo e('lessonCreate.platform'); ?>')<?php endif; ?>,
