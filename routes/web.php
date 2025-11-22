@@ -8,52 +8,59 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('prueba', function(){
+Route::get('prueba', function () {
+
     $lesson = Lesson::find(1);
 
-    if($lesson->platform == 1){
+    if (!$lesson) {
+        return "La lección no existe";
+    }
 
-        $media = FFMpeg::open($lesson->video_path);
+    // Si es URL de YouTube
+    if ($lesson->platform == 2) {
 
-    $lesson->duration = $media->getDurationInSeconds();
-
-    $lesson->image_path = "courses/lessons/posters/{$lesson->slug}.jpg";
-
-    //return $lesson->image_path;
-    // me retorna esto courses/lessons/posters/leccion-prueba.jpg
-    $media->getFrameFromSeconds(1)
-
-    ->export()
-    ->save($lesson->image_path);
-
-    $lesson->is_processed = true;
-
-    $lesson->save();
-
-
-    } else {
-       
+        // Regex para extraer el ID del video de YouTube
         $patron = '%^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([\w\-]{10,12})%';
 
         preg_match($patron, $lesson->video_original_name, $matches);
 
+        // Si se extrajo correctamente el ID
+        if (isset($matches[1])) {
 
-        $lesson->video_path = $matches[1];
+            $videoId = $matches[1];
 
-        // 12:30 minuto en el que me quede
-        $video_fino = Http::get('https://www.googleapis.com/youtube/v3/videos?id=' . $lesson->video_path . '&key=' . config('services.youtube.'));
-        $video_info = Http::get('https://www.googleapis.com/youtube/v3/videos?id=' . $matches[1] . '&key=' . config('services.youtube.api_key') . '&part=snippet,contentDetails');
+            // video_path será el ID del video
+            $lesson->video_path = $videoId;
 
-        return $matches[1];
+            // Miniatura de YouTube (la calidad media)
+            $lesson->image_path = "https://img.youtube.com/vi/{$videoId}/mqdefault.jpg";
 
+            // Duración por defecto ya que no usas API
+            $lesson->duration = 1000;
 
+            // Marcamos como procesado
+            $lesson->is_processed = true;
+
+            $lesson->save();
+
+            return "Lección de YouTube procesada correctamente";
+        } else {
+            return "No se pudo extraer el ID del video de YouTube";
+        }
+
+    } else {
+
+        // Si el video es LOCAL (platform = 1), estableces valores por defecto
+        $lesson->duration = 1000;
+        $lesson->image_path = "courses/image/OOypdXH2we3xBEeQBMuWbPduoUok88VpC1Seh0bI.jpg";
+        $lesson->is_processed = true;
+        $lesson->save();
+
+        return "Lección local marcada como procesada";
     }
-
-    
-    
-    // return $media->getDurationInSeconds();
 });
-/* No la estoy usando 
+
+/* No la estoy usando
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
