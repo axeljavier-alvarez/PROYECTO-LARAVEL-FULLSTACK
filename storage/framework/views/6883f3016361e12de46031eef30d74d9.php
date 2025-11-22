@@ -175,9 +175,7 @@ if (isset($__slots)) unset($__slots);
                 </div>
 
                 <!-- ICONO PARA ARRASTRAR -->
-                <div class="cursor-move px-3 text-gray-400 hover:text-gray-600">
-                    <i class="fas fa-bars"></i>
-                </div>
+                
 
             </div>
 
