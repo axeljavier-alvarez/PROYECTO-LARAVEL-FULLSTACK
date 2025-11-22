@@ -129,6 +129,7 @@
     <!-- Nombre -->
     <h1 class="flex items-center gap-2 truncate cursor-move text-gray-800">
         <i class="fas fa-play-circle text-blue-600"></i>
+        Lección <?php echo e($orderLessons->search($lesson->id) + 1); ?>:
         <?php echo e($lesson->name); ?>
 
     </h1>

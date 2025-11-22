@@ -64,10 +64,16 @@
                     @endif
 
                     <div class="mt-8">
+
+                        {{-- {{ $orderLessons->join('-') }} --}}
                         @livewire('instructor.courses.manage-lessons', [
                             'section' => $section,
-                            'lessons' => $section->lessons
-                        ], key('section-lessons-'. $section->id))
+                            'lessons' => $section->lessons,
+                            'orderLessons'=>$orderLessons
+
+                        ], key('section-lessons-'. $section->id . '-' . $orderLessons->join('-')))
+
+
                     </div>
                 </div>
 

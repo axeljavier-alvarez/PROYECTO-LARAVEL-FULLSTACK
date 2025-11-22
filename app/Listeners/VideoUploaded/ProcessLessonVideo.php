@@ -6,7 +6,7 @@ use App\Events\VideoUploaded;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class ProcessLessonVideo implements ShouldQueue
+class ProcessLessonVideo/* implements ShouldQueue */
 {
     /**
      * Create the event listener.

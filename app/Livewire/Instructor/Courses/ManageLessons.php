@@ -14,6 +14,8 @@ class ManageLessons extends Component
 
     public $section;
     public $lessons;
+
+    public $orderLessons;
     public $video, $url;
 
     public $lessonCreate = [
@@ -83,6 +85,8 @@ class ManageLessons extends Component
         $lesson->delete();
 
         $this->getLessons();
+        $this->dispatch('refreshOrderLessons')->to(\App\Livewire\Instructor\Courses\ManageSections::class);
+
     }
 
 
@@ -127,6 +131,14 @@ class ManageLessons extends Component
     $this->reset(['video', 'url', 'lessonCreate']);
     $this->lessonCreate['open'] = false;
     $this->lessonCreate['platform'] = 1;
+
+
+    $this->getLessons();
+
+    // $this->dispatch('refreshOrderLessons');
+    //$this->dispatchUp('refreshOrderLessons');
+    $this->dispatch('refreshOrderLessons')->to(\App\Livewire\Instructor\Courses\ManageSections::class);
+
 }
 
     public function edit($lessonId){

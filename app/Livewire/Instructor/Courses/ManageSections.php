@@ -26,6 +26,8 @@ class ManageSections extends Component
         ]
     ];
 
+    public $orderLessons;
+
     public function mount()
     {
         $this->getSections();
@@ -63,7 +65,7 @@ class ManageSections extends Component
 }
 
 
-    
+
 
 public function storePosition($sectionId)
 {
@@ -128,16 +130,30 @@ public function storePosition($sectionId)
             "icon" => "success",
             "title" => "Eliminado!",
             "text" => "La sección ha sido eliminada",
-            
+
         ]);
     }
 
+
+      #[On('refreshOrderLessons')]
     public function getSections()
 {
     $this->sections = Section::where('course_id', $this->course->id)
-        ->with('lessons')
+        ->with([
+            'lessons' => function($query) {
+                $query->orderBy('position', 'asc');
+            }
+        ])
         ->orderBy('position', 'asc')
         ->get();
+
+
+
+        $this->orderLessons = $this->sections
+        ->pluck('lessons')
+        ->collapse()
+        ->pluck('id');
+
 
     // GENERA AUTOMÁTICAMENTE LOS CAMPOS PARA CADA SECCIÓN
     foreach ($this->sections as $section) {

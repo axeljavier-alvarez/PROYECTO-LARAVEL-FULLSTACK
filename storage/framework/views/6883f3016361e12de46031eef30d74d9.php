@@ -152,16 +152,20 @@
                     <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 
                     <div class="mt-8">
+
+                        
                         <?php
 $__split = function ($name, $params = []) {
     return [$name, $params];
 };
 [$__name, $__params] = $__split('instructor.courses.manage-lessons', [
                             'section' => $section,
-                            'lessons' => $section->lessons
+                            'lessons' => $section->lessons,
+                            'orderLessons'=>$orderLessons
+
                         ]);
 
-$__html = app('livewire')->mount($__name, $__params, 'section-lessons-'. $section->id, $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, 'section-lessons-'. $section->id . '-' . $orderLessons->join('-'), $__slots ?? [], get_defined_vars());
 
 echo $__html;
 
@@ -171,6 +175,8 @@ unset($__params);
 unset($__split);
 if (isset($__slots)) unset($__slots);
 ?>
+
+
                     </div>
                 </div>
 
