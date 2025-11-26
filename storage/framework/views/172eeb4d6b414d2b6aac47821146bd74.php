@@ -55,7 +55,11 @@
 
             <!-- Right Section -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-            <div></div>
+            <div>
+                <a href="">
+                    <i class="fa-solid fa-cart-shopping text-xl text-gray-600"></i>
+                </a>
+            </div>
                 <!-- Settings Dropdown -->
                 <div class="ms-3 relative">
                     <!--[if BLOCK]><![endif]--><?php if(auth()->guard()->check()): ?>

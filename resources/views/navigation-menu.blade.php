@@ -36,7 +36,10 @@
 
             <!-- Right Section -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-            <div></div>
+            <div>
+                <a href="">-600"></i>
+                </a>
+            </div>
                 <!-- Settings Dropdown -->
                 <div class="ms-3 relative">
                     @auth
@@ -109,6 +112,7 @@
                 </div>
             </div>
 
+                    <i class="fa-solid fa-cart-shopping text-xl text-gray
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
                 <button @click="open = ! open"

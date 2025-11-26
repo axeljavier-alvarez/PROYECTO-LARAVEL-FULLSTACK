@@ -14,6 +14,8 @@ class CourseEnrolled extends Component
         return view('livewire.course-enrolled');
     }
 
+    
+
     public function addCart()
     {
         Cart::instance('shopping');
@@ -45,4 +47,16 @@ class CourseEnrolled extends Component
         // Cart::remove($this->course->id);
 
     }
+
+
+
+    public function buyNow()
+    {
+        $this->removeCart();
+        $this->addCart();
+
+        return redirect()->route('cart.index');
+        
+    }
+
 }

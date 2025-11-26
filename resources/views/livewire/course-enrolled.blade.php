@@ -24,7 +24,9 @@
     @endif
     
 
-    <button class="btn btn-red w-full uppercase">
+    <button 
+    wire:click="buyNow"
+    class="btn btn-red w-full uppercase">
         Comprar ahora
     </button>
 </div>

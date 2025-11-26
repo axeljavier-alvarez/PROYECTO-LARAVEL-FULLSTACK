@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Lesson;
 use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
@@ -22,6 +23,9 @@ Route::get('courses', [
 
 Route::get('courses/{course}', [CourseController::class, 'show'
 ])->name('courses.show');
+
+Route::get('cart', [CartController::class, 'index'])
+->name('cart.index');
 
 
 Route::get('prueba', function(){
