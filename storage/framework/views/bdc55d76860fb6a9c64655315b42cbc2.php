@@ -16,26 +16,8 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="/">
-                        <?php if (isset($component)) { $__componentOriginaldaff26d4e64b9d6b339909684d09d478 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginaldaff26d4e64b9d6b339909684d09d478 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.application-mark','data' => ['class' => 'block h-9 w-auto']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('application-mark'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['class' => 'block h-9 w-auto']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginaldaff26d4e64b9d6b339909684d09d478)): ?>
-<?php $attributes = $__attributesOriginaldaff26d4e64b9d6b339909684d09d478; ?>
-<?php unset($__attributesOriginaldaff26d4e64b9d6b339909684d09d478); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginaldaff26d4e64b9d6b339909684d09d478)): ?>
-<?php $component = $__componentOriginaldaff26d4e64b9d6b339909684d09d478; ?>
-<?php unset($__componentOriginaldaff26d4e64b9d6b339909684d09d478); ?>
-<?php endif; ?>
+                                                <img src="<?php echo e(asset('storage/courses/image/municipalidad.png')); ?>" class="h-16 w-auto" alt="Logo">
+
                     </a>
                 </div>
 

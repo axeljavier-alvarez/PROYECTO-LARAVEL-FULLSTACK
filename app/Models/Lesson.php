@@ -41,17 +41,26 @@ class Lesson extends Model
     ];
 
     public function image(): Attribute
-    {
-        return new Attribute(
-            get: function(){
-                if($this->platform == 1){
-                    return Storage::url($this->image_path);
-                }
+{
+    return new Attribute(
+        get: function () {
 
-                return $this->image_path;
+            // Si no hay imagen aún → placeholder seguro
+            if (!$this->image_path) {
+                return asset('images/default-thumbnail.jpg');
             }
-        );
-    }
+
+            // PLATFORM = 1 → video local
+            if ($this->platform == 1) {
+                return Storage::url($this->image_path);
+            }
+
+            // PLATFORM = 2 → YouTube
+            return $this->image_path;
+        }
+    );
+}
+
 
     // Relacion uno a muchos inversa
 

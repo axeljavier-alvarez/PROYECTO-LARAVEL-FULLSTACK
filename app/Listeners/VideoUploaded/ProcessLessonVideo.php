@@ -1,21 +1,13 @@
-<?php 
+<?php
 
 namespace App\Listeners\VideoUploaded;
 
 use App\Events\VideoUploaded;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Storage;
+use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
 
-class ProcessLessonVideo /* implements ShouldQueue */ 
+class ProcessLessonVideo
 {
-    /**
-     * Create the event listener.
-     */
-    public function __construct() 
-    {
-        // Constructor vacío (puedes agregar lógica si es necesario)
-    }
-
     /**
      * Handle the event.
      */
@@ -28,40 +20,89 @@ class ProcessLessonVideo /* implements ShouldQueue */
             return;
         }
 
-        // PLATFORM = 2 → YouTube
+        /*
+        |--------------------------------------------------------------------------
+        | PLATFORM = 2 → YOUTUBE
+        |--------------------------------------------------------------------------
+        */
         if ($lesson->platform == 2) {
-            // Regex para extraer ID de YouTube
+
+            // Regex para extraer ID
             $patron = '%^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([\w\-]{10,12})%';
             preg_match($patron, $lesson->video_original_name, $matches);
 
             if (isset($matches[1])) {
                 $videoId = $matches[1];
 
-                // Guardar ID como ruta
-                $lesson->video_path = $videoId;
+                $lesson->video_path = $videoId; // ID del video
 
-                // Miniatura de YouTube
+                // Thumbnail externa de YouTube
                 $lesson->image_path = "https://img.youtube.com/vi/{$videoId}/mqdefault.jpg";
 
-                // Valor temporal (sin API YouTube)
+                // Duración temporal (no usas API)
                 $lesson->duration = 1000;
                 $lesson->is_processed = true;
                 $lesson->save();
 
                 \Log::info("ProcessLessonVideo: Lección YouTube procesada correctamente. ID: {$videoId}");
             } else {
-                \Log::error("ProcessLessonVideo: No se pudo extraer el ID de YouTube para la lección {$lesson->id}");
+                \Log::error("ProcessLessonVideo: No se pudo extraer ID YT para la lección {$lesson->id}");
             }
-            return; // No retorna valores, solo termina
+
+            return;
         }
 
-        // PLATFORM = 1 → Video local
-        // Si el video es local, establece valores por defecto
-        $lesson->duration = 1000;
-        $lesson->image_path = "courses/image/laravel.jpg";
-        $lesson->is_processed = true;
-        $lesson->save();
+        /*
+        |--------------------------------------------------------------------------
+        | PLATFORM = 1 → VIDEO LOCAL
+        |--------------------------------------------------------------------------
+        */
+        if ($lesson->platform == 1) {
 
-        \Log::info("ProcessLessonVideo: Lección local procesada correctamente.");
+            $videoPath = $lesson->video_path;
+
+            if (!Storage::disk('public')->exists($videoPath)) {
+                \Log::error("ProcessLessonVideo: el archivo local no existe: {$videoPath}");
+
+                // valores de fallback
+                $lesson->duration = 1000;
+                $lesson->image_path = "courses/image/laravel.jpg";
+                $lesson->is_processed = true;
+                $lesson->save();
+                return;
+            }
+
+            /*
+            |-----------------------------------------
+            | 1) Miniatura real con FFmpeg
+            |-----------------------------------------
+            */
+            $thumbnail = 'courses/lessons/thumbnails/' . uniqid() . '.jpg';
+
+            FFMpeg::fromDisk('public')
+                ->open($videoPath)
+                ->getFrameFromSeconds(1)
+                ->export()
+                ->toDisk('public')
+                ->save($thumbnail);
+
+            $lesson->image_path = $thumbnail;
+
+            /*
+            |-----------------------------------------
+            | 2) Duración real con FFprobe
+            |-----------------------------------------
+            */
+            $media = FFMpeg::fromDisk('public')->open($videoPath);
+            $duration = $media->getFFProbe()
+                              ->format($media->getPathfile())
+                              ->get('duration');
+
+            $lesson->duration = intval($duration);
+            $lesson->is_processed = true;
+            $lesson->save();
+
+            \Log::info("ProcessLessonVideo: Video local procesado correctamente.");
+        }
     }
 }

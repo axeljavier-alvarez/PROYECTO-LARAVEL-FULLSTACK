@@ -16,7 +16,8 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="/">
-                        <x-application-mark class="block h-9 w-auto" />
+                                                <img src="{{ asset('storage/courses/image/municipalidad.png') }}" class="h-16 w-auto" alt="Logo">
+
                     </a>
                 </div>
 
