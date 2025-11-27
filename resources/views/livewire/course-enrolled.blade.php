@@ -1,6 +1,6 @@
 <div>
 
-    @if ($course->price->course ==0)
+    @if ($course->price->value ==0)
     <button
         wire:click="enrolled"
         class="btn btn-red w-full uppercase">

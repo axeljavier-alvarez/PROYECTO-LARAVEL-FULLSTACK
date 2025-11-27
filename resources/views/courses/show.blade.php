@@ -136,7 +136,29 @@
                         @endif
                       </p>
 
-                      @livewire('course-enrolled', ['course'=> $course])
+                      @can('enrolled', $course)
+
+
+                      <p class="flex items-center mb-1">
+                        <span class="text-blue-600">
+                            <svg class="fill-current h-5 w-5" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm-.75-4.25a1 1 0 112 0 1 1 0 01-2 0zM9.25 5a1 1 0 012 0v5a1 1 0 01-2 0V5z"/>
+                            </svg>
+                        </span>
+
+                        <span class="font-semibold">
+                            Adquirido el {{ $course->dateOfAcquisition->format('d/m/Y') }}
+                        </span>
+                      </p>
+                        <a href="{{ route('courses.status', $course) }}" class="btn btn-red text-center uppercase block w-full">
+                            Continuar con el curso
+                        </a>
+                      @else
+                       
+                        @livewire('course-enrolled', ['course'=> $course])
+                      @endcan
+
 
                 {{-- <button class="btn btn-blue w-full uppercase mb-2">
                     Agregar al carrito

@@ -4,6 +4,9 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
+
 use App\Models\Lesson;
 use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
 use App\Models\Course;
@@ -31,17 +34,20 @@ Route::get('courses-status/{course}', [
 Route::get('cart', [CartController::class, 'index'])
 ->name('cart.index');
 
+Route::get('checkout', [CartController::class, 'checkout'])
+->name('cart.checkout');
 
-Route::get('prueba', function(){
+/* Route::get('prueba', function(){
 
-    Cart::instance('shopping');
-    return Cart::content();
+    return auth()->user()->courses_enrolled;
 
+}); */
+
+Route::get('prueba', function() {
+    // return Auth::user()?->courses_enrolled->contains(8) ?? 'No hay usuario autenticado';
+
+    // dd(auth()->user()->courses_enrolled->contains(8));
 });
-
-
-
-
 
 
 

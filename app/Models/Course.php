@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Course extends Model
 {
@@ -38,6 +39,33 @@ class Course extends Model
             : 'https://cdn-icons-png.flaticon.com/512/8344/8344917.png'
     );
 }
+
+protected function dateOfAcquisition(): Attribute
+{
+    return new Attribute(
+
+       get: function () {
+             DB::table('course_user')
+                ->where('course_id', $this->id)
+                ->where('user_id', auth()->id())
+                ->min('created_at');
+
+
+                return now()->parse(
+
+                DB::table('course_user')
+                ->where('course_id', $this->id)
+                ->where('user_id', auth()->id())
+                ->first()
+                ->created_at
+
+                )->format('d/m/Y');
+        }
+
+       
+    );
+}
+
 
 
 

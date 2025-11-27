@@ -12,19 +12,29 @@ class CourseEnrolled extends Component
 
     // usuario tiene que estar autenticado
     public function enrolled()
-    {
-        // dd('Enrolled');
+{
+    if(auth()->check()){
+        $this->course->students()->attach(auth()->id());
 
-        if(auth()->check()){
-            $this->course->students()
-            ->attach(auth()->id());
+        // Agregar al carrito automáticamente
+        Cart::instance('shopping')->add([
+            'id' => $this->course->id,
+            'name' => $this->course->title,
+            'qty'=> 1,
+            'price'=> $this->course->price->value,
+            'options'=>[
+                'slug' => $this->course->slug,
+                'image'=>$this->course->image,
+                'teacher'=>$this->course->teacher->name
+            ]
+        ]);
 
-        }
-
-            return redirect()->route('courses.status', ['course' => $this->course->id]);
-
-
+        $this->dispatch('cart-updated', Cart::count());
     }
+
+    return redirect()->route('courses.status', ['course' => $this->course->id]);
+}
+
 
     public function render()
     {
