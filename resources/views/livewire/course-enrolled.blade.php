@@ -1,5 +1,15 @@
 <div>
 
+    @if ($course->price->course ==0)
+    <button
+        wire:click="enrolled"
+        class="btn btn-red w-full uppercase">
+            Inscribite ahora
+    </button>
+    @else
+
+
+
     @if(Cart::instance('shopping')->content()->where('id', $course->id)->first())
 
 
@@ -20,13 +30,15 @@
     class="btn btn-blue w-full uppercase mb-2">
     Agregar al carrito
     </button>
-    
-    @endif
-    
 
-    <button 
+    @endif
+
+
+    <button
     wire:click="buyNow"
     class="btn btn-red w-full uppercase">
         Comprar ahora
     </button>
+
+    @endif
 </div>

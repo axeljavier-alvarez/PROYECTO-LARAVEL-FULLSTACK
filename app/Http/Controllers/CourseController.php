@@ -15,4 +15,9 @@ class CourseController extends Controller
     {
         return view('courses.show', compact('course'));
     }
+
+    public function status()
+    {
+        return view('courses.status');
+    }
 }

@@ -9,12 +9,29 @@ class CourseEnrolled extends Component
 {
 
     public $course;
+
+    // usuario tiene que estar autenticado
+    public function enrolled()
+    {
+        // dd('Enrolled');
+
+        if(auth()->check()){
+            $this->course->students()
+            ->attach(auth()->id());
+
+        }
+
+            return redirect()->route('courses.status', ['course' => $this->course->id]);
+
+
+    }
+
     public function render()
     {
         return view('livewire.course-enrolled');
     }
 
-    
+
 
     public function addCart()
     {
@@ -29,7 +46,9 @@ class CourseEnrolled extends Component
                 'image'=>$this->course->image,
                 'teacher'=>$this->course->teacher->name
             ]
-            ]);
+        ]);
+
+        $this->dispatch('cart-updated', Cart::count());
     }
 
     public function removeCart()
@@ -44,6 +63,9 @@ class CourseEnrolled extends Component
             Cart::remove($itemCart->rowId);
 
         }
+
+        $this->dispatch('cart-updated', Cart::count());
+
         // Cart::remove($this->course->id);
 
     }
@@ -56,7 +78,7 @@ class CourseEnrolled extends Component
         $this->addCart();
 
         return redirect()->route('cart.index');
-        
+
     }
 
 }

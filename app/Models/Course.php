@@ -48,6 +48,7 @@ class Course extends Model
 
         /* Relaciones */
 
+    // cursos y usuarios
     public function teacher()
     {
         /* retornar uno a muchos inversa */
@@ -86,5 +87,12 @@ class Course extends Model
     public function sections()
     {
         return $this->hasMany(Section::class);
+    }
+
+    // Relacion muchos a muchos
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'course_user', 'course_id', 'user_id')
+        ->withTimestamps();
     }
 }
