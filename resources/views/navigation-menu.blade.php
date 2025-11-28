@@ -74,7 +74,13 @@
                                 @endif
                             </x-slot>
                             <x-slot name="content">
-                                <x-dropdown-link href="{{ route('profile.show') }}">Profile</x-dropdown-link>
+                                <x-dropdown-link href="{{ route('profile.show') }}">
+                                    Profile
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('courses.myCourses') }}">
+                                    Mis cursos
+                                </x-dropdown-link>
+                                
                                 <form method="POST" action="{{ route('logout') }}" x-data>
                                     @csrf
                                     <x-dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();">Log Out</x-dropdown-link>

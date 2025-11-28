@@ -90,7 +90,7 @@
                                     <ul>
                                         <?php $__currentLoopData = $section->lessons; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lesson): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <li>
-                                            <a href="" class="flex">
+                                            <a href="<?php echo e(route('courses.status', [$course, $lesson])); ?>" class="flex">
                                                 <i class="far fa-play-circle text-blue-500 mt-0.5"></i>
                                                 <span class="font-semibold text-gray-600 hover:text-blue-800 text-sm">
                                                     <?php echo e($lesson->name); ?>

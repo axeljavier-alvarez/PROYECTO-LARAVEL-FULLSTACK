@@ -40,6 +40,14 @@ class Lesson extends Model
         'is_processed' => 'boolean'
     ];
 
+// metodo de ruta para el slog
+    public function getRouteKeyName():string
+{
+    return 'slug';
+}
+
+
+
     public function image(): Attribute
 {
     return new Attribute(

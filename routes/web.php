@@ -23,11 +23,19 @@ Route::get('courses', [CourseController::class, 'index'])
     // ->middleware(CheckCartItems::class)
     ->name('courses.index');
 
+Route::get('courses/my-courses', [CourseController::class, 'myCourses'])
+    ->middleware('auth')
+    ->name('courses.myCourses');
+
+
 Route::get('courses/{course}', [CourseController::class, 'show'])
     ->name('courses.show');
 
-Route::get('courses-status/{course}', [CourseController::class, 'status'])
+Route::get('courses-status/{course}/{lesson?}', [CourseController::class, 'status'])
     ->name('courses.status');
+    
+/* Route::get('courses-status/{course}', [CourseController::class, 'status'])
+    ->name('courses.status'); */
 
 // Carrito
 Route::get('cart', [CartController::class, 'index'])
@@ -45,6 +53,8 @@ Route::get('checkout', [CheckoutController::class, 'index'])
 Route::get('gracias', function(){
     return view('gracias');
 })->name('gracias');
+
+
 
 // Rutas de prueba (temporal)
 // Route::get('prueba', function() {

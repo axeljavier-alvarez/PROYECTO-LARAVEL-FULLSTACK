@@ -91,6 +91,12 @@ protected function dateOfAcquisition(): Attribute
 }
 
 
+public function getRouteKeyName():string
+{
+    return 'slug';
+}
+
+
 
 
 
