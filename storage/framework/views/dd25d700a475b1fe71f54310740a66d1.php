@@ -46,6 +46,9 @@
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                         <li class="text-gray-500 text-center py-4">
                             No hay productos en el carrito.
+
+                            <a href="<?php echo e(route('courses.index')); ?>"
+                            class="text-blue-500 hover:text-blue-400">Ver todos los cursos</a>
                         </li>
                     <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 

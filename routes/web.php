@@ -4,6 +4,8 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+
+use App\Http\Middleware\CheckCartItems;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +20,7 @@ Route::get('/', [WelcomeController::class, 'index'])
 
 // Cursos
 Route::get('courses', [CourseController::class, 'index'])
+    // ->middleware(CheckCartItems::class)
     ->name('courses.index');
 
 Route::get('courses/{course}', [CourseController::class, 'show'])
@@ -31,8 +34,13 @@ Route::get('cart', [CartController::class, 'index'])
     ->name('cart.index');
 
 // Checkout
+/* Route::get('checkout', [CheckoutController::class, 'index'])
+    ->name('checkout.index'); */
+
+
 Route::get('checkout', [CheckoutController::class, 'index'])
-    ->name('checkout.index');
+->middleware(CheckCartItems::class)
+->name('checkout.index');
 
 Route::get('gracias', function(){
     return view('gracias');

@@ -44,6 +44,9 @@
                     @empty
                         <li class="text-gray-500 text-center py-4">
                             No hay productos en el carrito.
+
+                            <a href="{{ route('courses.index') }}"
+                            class="text-blue-500 hover:text-blue-400">Ver todos los cursos</a>
                         </li>
                     @endforelse
 

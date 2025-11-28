@@ -9,23 +9,32 @@ class ManageShoppingCart extends Component
 {
 
 
-    public function destroy()
+    /* public function destroy()
     {
         Cart::instance('shopping');
         Cart::destroy();
 
 
-        // de la api de codersree para vaciar carrito
          $this->dispatch('cart-updated', Cart::count());
 
             if(auth()->check()){
                 Cart::store(auth()->id());
 
-                }
+    } */
+
+    public function destroy()
+    {
+        Cart::instance('shopping')->destroy();
+        $this->dispatch('cart-updated', Cart::instance('shopping')->count());
+
+        if(auth()->check()){
+            Cart::store(auth()->id());
+        }
+    }
 
 
         // $this->dispatch('cart-updated', Cart::count());
-    }
+    
     public function remove($rowId)
     {
         // dd($rowId);
