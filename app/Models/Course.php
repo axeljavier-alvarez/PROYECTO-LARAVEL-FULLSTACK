@@ -44,7 +44,6 @@ class Course extends Model
     );
 }
 
-
   protected function image(): Attribute
 {
     return new Attribute(
