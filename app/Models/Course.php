@@ -31,6 +31,20 @@ class Course extends Model
     /* usuarios que crean curso y los que se matriculan */
     /* uno a muchos*/
 
+
+    public function lessons()
+{
+    return $this->hasManyThrough(
+        Lesson::class,     // Modelo final (lección)
+        Section::class,    // Modelo intermedio (sección)
+        'course_id',       // FK en sections que apunta a courses
+        'section_id',      // FK en lessons que apunta a sections
+        'id',              // PK local en courses
+        'id'               // PK local en sections
+    );
+}
+
+
   protected function image(): Attribute
 {
     return new Attribute(

@@ -79,4 +79,10 @@ class Lesson extends Model
         return $this->belongsTo(Section::class);
     }
 
+    // relacion muchos a muchos
+   /*  public function users()
+    {
+        return $this->belongsToMany(User::class, 'course_lesson_user');
+    } */
+
 }

@@ -151,9 +151,14 @@
                             Adquirido el {{ $course->dateOfAcquisition->format('d/m/Y') }}
                         </span>
                       </p>
-                        <a href="{{ route('courses.status', $course) }}" class="btn btn-red text-center uppercase block w-full">
+                                                <a href="{{ route('courses.status', [
+                            $course,
+                            $course->sections->flatMap->lessons->sortBy('position')->first()
+                        ]) }}"
+                        class="btn btn-red text-center uppercase block w-full">
                             Continuar con el curso
                         </a>
+
                       @else
                        
                         @livewire('course-enrolled', ['course'=> $course])

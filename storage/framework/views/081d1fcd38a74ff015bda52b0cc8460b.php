@@ -177,9 +177,14 @@
 
                         </span>
                       </p>
-                        <a href="<?php echo e(route('courses.status', $course)); ?>" class="btn btn-red text-center uppercase block w-full">
+                                                <a href="<?php echo e(route('courses.status', [
+                            $course,
+                            $course->sections->flatMap->lessons->sortBy('position')->first()
+                        ])); ?>"
+                        class="btn btn-red text-center uppercase block w-full">
                             Continuar con el curso
                         </a>
+
                       <?php else: ?>
                        
                         <?php
