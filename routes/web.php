@@ -34,6 +34,10 @@ Route::get('cart', [CartController::class, 'index'])
 Route::get('checkout', [CheckoutController::class, 'index'])
     ->name('checkout.index');
 
+Route::get('gracias', function(){
+    return view('gracias');
+})->name('gracias');
+
 // Rutas de prueba (temporal)
 // Route::get('prueba', function() {
 //     return auth()->user()?->courses_enrolled->contains(8) ?? 'No hay usuario autenticado';
