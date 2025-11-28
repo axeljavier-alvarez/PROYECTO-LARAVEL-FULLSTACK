@@ -40,33 +40,55 @@ class Course extends Model
     );
 }
 
+// protected function dateOfAcquisition(): Attribute
+// {
+//     return new Attribute(
+
+//        get: function () {
+//              DB::table('course_user')
+//                 ->where('course_id', $this->id)
+//                 ->where('user_id', auth()->id())
+//                 ->min('created_at');
+
+
+//                 return now()->parse(
+
+//                 DB::table('course_user')
+//                 ->where('course_id', $this->id)
+//                 ->where('user_id', auth()->id())
+//                 ->first()
+//                 ->created_at
+
+//                 )->format('d/m/Y');
+//         }
+
+
+//     );
+// }
+
+
 protected function dateOfAcquisition(): Attribute
 {
     return new Attribute(
+        get: function () {
 
-       get: function () {
-             DB::table('course_user')
+            if (!auth()->check()) {
+                return null;
+            }
+
+            $record = DB::table('course_user')
                 ->where('course_id', $this->id)
                 ->where('user_id', auth()->id())
-                ->min('created_at');
+                ->first();
 
+            if (!$record) {
+                return null;
+            }
 
-                return now()->parse(
-
-                DB::table('course_user')
-                ->where('course_id', $this->id)
-                ->where('user_id', auth()->id())
-                ->first()
-                ->created_at
-
-                )->format('d/m/Y');
+            return \Carbon\Carbon::parse($record->created_at);
         }
-
-       
     );
 }
-
-
 
 
 

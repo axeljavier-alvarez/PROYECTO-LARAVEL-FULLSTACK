@@ -6,7 +6,7 @@
 
     <div class="grid lg:grid-cols-5 gap-12">
         <div class="lg:col-span-3">
-            <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-2">
                 <ul class="space-y-4">
 
                     <!--[if BLOCK]><![endif]--><?php $__empty_1 = true; $__currentLoopData = Cart::instance('shopping')->content(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
@@ -25,7 +25,8 @@
                                 </h2>
 
                                 <p class="text-gray-500">
-                                   <?php echo e($item->options->teacher); ?> 
+                                   <?php echo e($item->options->teacher); ?>
+
                                 </p>
 
                                 <p class="font-semibold">
@@ -50,6 +51,18 @@
 
                 </ul>
             </div>
+
+            <!--[if BLOCK]><![endif]--><?php if(Cart::instance('shopping')->count()): ?>
+
+
+            <button
+            wire:click="destroy"
+            class="font-semibold text-red-500 text-sm">
+                <i class="fas fa-trash-alt mr-2"></i>
+                Vaciar el carrito de compras
+            </button>
+
+            <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
         </div>
 
         <div class="lg:col-span-2">
@@ -74,12 +87,13 @@
                         Proceder con el pago
                     </a>
 
-                    </button>
-
                     <?php else: ?>
-                        
+                    <button
+                        disabled class="btn btn-red block w-full text-center disabled:opacity-50">
+                         Proceder con el pago
+                     </button>
                     <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
-                    
+
                 </div>
 
             </div>

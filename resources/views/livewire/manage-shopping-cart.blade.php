@@ -6,7 +6,7 @@
 
     <div class="grid lg:grid-cols-5 gap-12">
         <div class="lg:col-span-3">
-            <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-2">
                 <ul class="space-y-4">
 
                     @forelse (Cart::instance('shopping')->content() as $item)
@@ -24,7 +24,7 @@
                                 </h2>
 
                                 <p class="text-gray-500">
-                                   {{ $item->options->teacher }} 
+                                   {{ $item->options->teacher }}
                                 </p>
 
                                 <p class="font-semibold">
@@ -49,6 +49,18 @@
 
                 </ul>
             </div>
+
+            @if (Cart::instance('shopping')->count())
+
+
+            <button
+            wire:click="destroy"
+            class="font-semibold text-red-500 text-sm">
+                <i class="fas fa-trash-alt mr-2"></i>
+                Vaciar el carrito de compras
+            </button>
+
+            @endif
         </div>
 
         <div class="lg:col-span-2">
@@ -73,12 +85,13 @@
                         Proceder con el pago
                     </a>
 
-                    </button>
-
                     @else
-                        
+                    <button
+                        disabled class="btn btn-red block w-full text-center disabled:opacity-50">
+                         Proceder con el pago
+                     </button>
                     @endif
-                    
+
                 </div>
 
             </div>
