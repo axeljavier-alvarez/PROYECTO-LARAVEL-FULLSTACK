@@ -15,19 +15,46 @@ class CourseEnrolled extends Component
     }
 
     /** Cursos GRATIS: inscribir directamente */
+    // public function enrolled()
+    // {
+    //     if (!auth()->check()) {
+    //         return redirect()->route('login');
+    //     }
+
+    //     // Verificar si ya está inscrito
+    //     if (!$this->course->students()->where('user_id', auth()->id())->exists()) {
+    //         $this->course->students()->attach(auth()->id());
+    //     }
+
+    //     return redirect()->route('courses.status', $this->course->id);
+    // }
+
+
     public function enrolled()
-    {
-        if (!auth()->check()) {
-            return redirect()->route('login');
-        }
-
-        // Verificar si ya está inscrito
-        if (!$this->course->students()->where('user_id', auth()->id())->exists()) {
-            $this->course->students()->attach(auth()->id());
-        }
-
-        return redirect()->route('courses.status', $this->course->id);
+{
+    if (!auth()->check()) {
+        return redirect()->route('login');
     }
+
+    // Inscribir al usuario si no estaba
+    if (!$this->course->students()->where('user_id', auth()->id())->exists()) {
+        $this->course->students()->attach(auth()->id());
+    }
+
+    // Obtener la primera lección publicada del curso
+    $lesson = $this->course->sections
+        ->pluck('lessons')
+        ->collapse()
+        ->where('is_published', true)
+        ->first();
+
+    // Redirigir a la ruta con slug del curso y de la lección
+    return redirect()->route('courses.status', [
+        'course' => $this->course->slug,
+        'lesson' => $lesson?->slug, // usa nullsafe operator por si no hay lecciones
+    ]);
+}
+
 
     /** Agregar al carrito */
     public function addCart()

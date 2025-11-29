@@ -26,7 +26,7 @@ class CourseController extends Controller
 
     //     if(!$lesson)
     //     {
-    
+
     //     }
     //    return $lesson->users()->get();
 
@@ -43,7 +43,7 @@ class CourseController extends Controller
     //         'course_id' => $course->id,
     //         'lesson_id' => $lesson->id,
     //         'user_id'=> auth()->id()
-            
+
     //     ], [
     //         'current' => true
     //     ]);
@@ -106,7 +106,7 @@ class CourseController extends Controller
 // }
 
 
-    
+
     public function status(Course $course, Lesson $lesson = null)
 {
     // Si no se pasó la lección en la URL, cargamos la primera publicada
@@ -124,6 +124,7 @@ class CourseController extends Controller
         // Obtener la primera lección de todas las secciones
         $lesson = $course->sections->pluck('lessons')->collapse()->first();
 
+        // si no hay leccion seleccionada se encuentra la primera leccion
         if (!$lesson) {
             // Si el curso no tiene lecciones publicadas, retornar vista con mensaje
             return view('courses.status', compact('course', 'lesson'));
@@ -162,7 +163,7 @@ class CourseController extends Controller
 
 
 
-    
+
 
     public function myCourses()
     {
