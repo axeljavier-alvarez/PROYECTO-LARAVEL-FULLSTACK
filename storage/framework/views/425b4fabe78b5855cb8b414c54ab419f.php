@@ -23,12 +23,11 @@ $__split = function ($name, $params = []) {
     return [$name, $params];
 };
 [$__name, $__params] = $__split('course-status', [
-        'course'=>$course,
-        'sections' => $sections->toArray(),
-        'lesson'=>$lesson,
-        'current' => $users,
-
-        ],);
+            'course' => $course,
+            'sections' => $sections->toArray(),
+            'lessons' => $lessons->pluck('id'),  // TODOS los ids de las lecciones
+            'current' => $lesson,               // la lección actual
+        ]);
 
 $__html = app('livewire')->mount($__name, $__params, 'lw-4085662392-0', $__slots ?? [], get_defined_vars());
 
@@ -50,7 +49,6 @@ if (isset($__slots)) unset($__slots);
 <?php $component = $__componentOriginala766c2d312d6f7864fe218e2500d2bba; ?>
 <?php unset($__componentOriginala766c2d312d6f7864fe218e2500d2bba); ?>
 <?php endif; ?>
-
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>

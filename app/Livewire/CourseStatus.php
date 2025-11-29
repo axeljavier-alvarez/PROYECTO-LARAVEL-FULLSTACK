@@ -10,7 +10,7 @@ class CourseStatus extends Component
     public $course;
 
     public $sections;
-    public $lesson;
+    public $lessons;
 
     public $current;
     public function render()
