@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -110,19 +111,36 @@ class CourseController extends Controller
     public function status(Course $course, Lesson $lesson = null)
 {
     // Si no se pasó la lección en la URL, cargamos la primera publicada
-    if (!$lesson) {
-        $course->load([
-            'sections' => function ($query) {
-                $query->orderBy('position', 'asc')
-                      ->with(['lessons' => function ($query) {
-                          $query->where('is_published', true)
-                                ->orderBy('position', 'asc');
-                      }]);
-            }
-        ]);
+    // if (!$lesson) {
+        // $course->load([
+        //     'sections' => function ($query) {
+        //         $query->orderBy('position', 'asc')
+        //               ->with(['lessons' => function ($query) {
+        //                   $query->where('is_published', true)
+        //                         ->orderBy('position', 'asc');
+        //               }]);
+        //     }
+        // ]);
 
-        // Obtener la primera lección de todas las secciones
+        // // Obtener la primera lección de todas las secciones
+        // $lesson = $course->sections->pluck('lessons')->collapse()->first();
+
+        $sections = Section::where('course_id', $course->id)
+            ->whereHas('lessons', function($query) {
+                $query->where('is_published', true);
+            })
+            ->with('lessons', function($query) {
+                $query->where('is_published', true)
+                      ->orderBy('position', 'asc');
+            })
+            ->orderBy('position', 'asc')
+            ->get();
+
         $lesson = $course->sections->pluck('lessons')->collapse()->first();
+
+        return $lesson->plun;
+        // return $sections;
+
 
         // si no hay leccion seleccionada se encuentra la primera leccion
         if (!$lesson) {
@@ -131,8 +149,8 @@ class CourseController extends Controller
         }
 
         // Redirigir a la URL con el curso y la lección encontrada
-        return redirect()->route('courses.status', [$course, $lesson]);
-    }
+        // return redirect()->route('courses.status', [$course, $lesson]);
+    // }
 
     // Registrar al usuario en la tabla pivot
     if (auth()->check()) {
@@ -158,7 +176,7 @@ class CourseController extends Controller
     $users = $lesson->users()->get();
 
     // Retornar la vista con la información
-    return view('courses.status', compact('course', 'lesson', 'users'));
+    return view('courses.status', compact('course', 'sections', 'lesson', 'users'));
 }
 
 

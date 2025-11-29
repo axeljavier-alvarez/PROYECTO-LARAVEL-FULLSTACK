@@ -8,6 +8,8 @@ class CourseStatus extends Component
 {
 
     public $course;
+
+    public $sections;
     public $lesson;
 
     public $current;

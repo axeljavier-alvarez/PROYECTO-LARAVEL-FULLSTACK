@@ -24,6 +24,7 @@ $__split = function ($name, $params = []) {
 };
 [$__name, $__params] = $__split('course-status', [
         'course'=>$course,
+        'sections' => $sections->toArray(),
         'lesson'=>$lesson,
         'current' => $users,
 
