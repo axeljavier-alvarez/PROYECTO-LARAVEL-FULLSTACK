@@ -3,7 +3,7 @@
         @livewire('course-status', [
             'course' => $course,
             'sections' => $sections->toArray(),
-            'lessons' => $lessons->pluck('id'),  // TODOS los ids de las lecciones
+            'lessons' => $lessons,  // TODOS los ids de las lecciones
             'current' => $lesson,               // la lección actual
         ])
     </x-container>
