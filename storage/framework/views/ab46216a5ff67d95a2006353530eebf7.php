@@ -1,8 +1,35 @@
 <div>
-<div class="grid grid-cols-3 gap-8">
-    <div class="col-span-2">
 
-        <iframe class="w-full aspect-video" src="https://www.youtube.com/embed/<?php echo e($current->video_path); ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <?php $__env->startPush('css'); ?>
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.8.3/plyr.css" />
+    <?php $__env->stopPush(); ?>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="col-span-1 lg:col-span-2">
+
+        <div wire:ignore>
+
+
+        <!--[if BLOCK]><![endif]--><?php if($current->platform == 1): ?>
+
+        <video id="player" playsinline controls data-poster="<?php echo e($current->image); ?>">
+            <source src="<?php echo e(Storage::url($current->video_path)); ?>" type="video/mp4">
+        </video>
+
+        <?php else: ?>
+        
+
+
+        <div class="plyr__video-embed" id="player">
+            <iframe
+                src="https://www.youtube.com/embed/<?php echo e($current->video_path); ?>"
+                allowfullscreen
+                allowtransparency
+                allow="autoplay"
+            ></iframe>
+        </div>
+
+        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 
         <h1 class="text-3xl font-semibold mt-4">
            <?php echo e($lessons->pluck('id')->search($current->id) + 1); ?>. <?php echo e($current->name); ?>
@@ -15,6 +42,8 @@
 
             </p>
         <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+        </div>
+        
 
         <!--[if BLOCK]><![endif]--><?php if(auth()->guard()->check()): ?>
         <div class="flex items-center space-x-2">
@@ -82,13 +111,13 @@
             
             <div class="mt-2">
                     <p class="text-gray-600 text-sm">
-                        10% completado
+                        <?php echo e($advance); ?>% completado
                     </p>
 
                     <div class="relative pt-1">
                         <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-200">
                             <div
-                                style="width:10%"
+                                style="width:<?php echo e($advance); ?>"
                                 class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500">
                             </div>
                         </div>
@@ -98,24 +127,30 @@
             
             <ul class="space-y-4 text-gray-600">
                 <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $sections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $section): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <li>
-                    <button class="text-left flex justify-between">
+                <li x-data="{open: '<?php echo e($section['id'] == $current->section_id); ?>'}">
+                    <button x-on:click="open =!open" class="text-left flex justify-between">
                         <span>
                             <?php echo e($section['name']); ?>
 
                         </span>
 
-                        <i class="mt-1 fas fa-angle-down">
+                        <i class="mt-1 fas fa-angle-down" x-bind:class="open ? 'fa-angle-up' : 'fa-angle-down'">
 
                         </i>
 
                     </button>
 
-                    <ul class="space-y-1 mt-2">
+                    <ul class="space-y-1 mt-2" x-show="open" x-cloak>
                         <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $section['lessons']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lesson): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <li>
                             <a href="<?php echo e(route('courses.status', [$course, $lesson['slug']])); ?>" class="w-full flex">
-                                <i class="fa-solid <?php echo e($lesson['id'] == $current->id ? 'fa-circle-dot' : 'fa-circle'); ?> mt-1 mr-2"></i>
+                                <i class="fa-solid <?php echo e($lesson['id'] == $current->id ? 'fa-circle-dot' : 'fa-circle'); ?> mt-1 mr-2
+                                    <?php echo e(DB::table('course_lesson_user')
+                                        ->where('lesson_id', $lesson['id'])
+                                        ->where('user_id', auth()->id())
+                                        ->where('completed', 1)
+                                        ->count() ? 'text-yellow-500' : ''); ?>">
+                                </i>
                                 <span>
                                     <?php echo e($lessons->pluck('id')->search($lesson['id'] ) +1); ?> .
                                     <?php echo e($lesson['name']); ?>
@@ -131,5 +166,25 @@
         </div>
     </aside>
 </div>
+
+<?php $__env->startPush('js'); ?>
+<script src="https://cdn.plyr.io/3.8.3/plyr.js"></script>
+<script>
+      const player = new Plyr('#player');
+
+      player.on('ready', event=>{
+        player.play();
+      });
+
+      player.on('ended', event=>{
+
+        window.Livewire.find('<?php echo e($_instance->getId()); ?>').call('completedLesson')
+        // player.play();
+      })
+
+
+</script>
+    
+<?php $__env->stopPush(); ?>
 </div>
 <?php /**PATH C:\laragon\www\codersfree\resources\views/livewire/course-status.blade.php ENDPATH**/ ?>

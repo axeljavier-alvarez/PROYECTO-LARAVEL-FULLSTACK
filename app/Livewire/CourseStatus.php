@@ -17,12 +17,14 @@ class CourseStatus extends Component
 
     public $open_lessons;
     public $completed = false;
+    public $advance;
 
 
     public function mount()
     {
         $this->setOpenLessons();
         $this->setCompleted();
+        $this->setAdvance();
     }
 
     public function updated($property, $value)
@@ -35,7 +37,8 @@ class CourseStatus extends Component
             ->where('user_id', auth()->id())
             ->update(['completed'=> $value]);
 
-            $this->setOpenLessons()
+            $this->setOpenLessons();
+            $this->setAdvance();
         }
     }
 
@@ -44,7 +47,19 @@ class CourseStatus extends Component
         $this->open_lessons= DB::table('course_lesson_user')
         ->where('course_id', $this->course->id)
         ->where('user_id', auth()->id())
+        ->whereIn('lesson_id', $this->lessons->pluck('id'))
         ->get();
+    }
+
+    public function completedLesson()
+    {
+         DB::table('course_lesson_user')
+            ->where('lesson_id', $this->current->id)
+            ->where('user_id', auth()->id())
+            ->update(['completed'=> true]);
+
+        $this->nextLesson();
+
     }
 
     public function setCompleted()
@@ -52,14 +67,34 @@ class CourseStatus extends Component
         if(auth()->check())
         {
 
-            $this->completed = $this->open_lessons
+        $this->completed = $this->open_lessons
         ->where('lesson_id', $this->current->id)
         ->where('user_id', auth()->id())
-        ->first()
-        ->completed;
+        ->where('completed', 1)
+        ->count();
+
+
+        
+        // $open_lessons
+        // ->where('lesson_id', $lesson['id'])
+        // ->where('user_id', auth()->id())
+        // ->where('completed', 1)
+        // ->count();
+
 
         }
 
+    }
+
+
+    // nuevo metodo 
+    public function setAdvance()
+    {
+        $this->advance = round($this->open_lessons
+        ->where('completed', 1)
+        ->count() * 100 / ($this->lessons->count()));
+
+        
     }
 
     public function previousLesson()
