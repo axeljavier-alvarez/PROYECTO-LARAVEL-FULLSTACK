@@ -16,17 +16,18 @@
             </p>
         <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 
+        <!--[if BLOCK]><![endif]--><?php if(auth()->guard()->check()): ?>
         <div class="flex items-center space-x-2">
             <?php if (isset($component)) { $__componentOriginal592735d30e1926fbb04ff9e089d1fccf = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal592735d30e1926fbb04ff9e089d1fccf = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.toggle','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.toggle','data' => ['wire:model' => 'completed','label' => 'Marcar esta unidad como completada']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('toggle'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes([]); ?>
+<?php $component->withAttributes(['wire:model' => 'completed','label' => 'Marcar esta unidad como completada']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal592735d30e1926fbb04ff9e089d1fccf)): ?>
@@ -37,8 +38,9 @@
 <?php $component = $__componentOriginal592735d30e1926fbb04ff9e089d1fccf; ?>
 <?php unset($__componentOriginal592735d30e1926fbb04ff9e089d1fccf); ?>
 <?php endif; ?>
-            Marcar esta unidad como completada
         </div>
+        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+
 
         <div class="bg-white shadow-xl rounded-lg px-6 py-4 mt-2">
             <div class="flex justify-between">
@@ -113,7 +115,7 @@
                         <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $section['lessons']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lesson): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <li>
                             <a href="<?php echo e(route('courses.status', [$course, $lesson['slug']])); ?>" class="w-full flex">
-                                <i class="fa-solid fa-circle mt-1 mr-2"></i>
+                                <i class="fa-solid <?php echo e($lesson['id'] == $current->id ? 'fa-circle-dot' : 'fa-circle'); ?> mt-1 mr-2"></i>
                                 <span>
                                     <?php echo e($lessons->pluck('id')->search($lesson['id'] ) +1); ?> .
                                     <?php echo e($lesson['name']); ?>

@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Illuminate\Support\Facades\DB;
 
 class CourseStatus extends Component
 {
@@ -13,6 +14,53 @@ class CourseStatus extends Component
     public $lessons;
 
     public $current;
+
+    public $open_lessons;
+    public $completed = false;
+
+
+    public function mount()
+    {
+        $this->setOpenLessons();
+        $this->setCompleted();
+    }
+
+    public function updated($property, $value)
+    {
+        if($property == 'completed')
+        {
+            // dd($value);
+            DB::table('course_lesson_user')
+            ->where('lesson_id', $this->current->id)
+            ->where('user_id', auth()->id())
+            ->update(['completed'=> $value]);
+
+            $this->setOpenLessons()
+        }
+    }
+
+    public function setOpenLessons()
+    {
+        $this->open_lessons= DB::table('course_lesson_user')
+        ->where('course_id', $this->course->id)
+        ->where('user_id', auth()->id())
+        ->get();
+    }
+
+    public function setCompleted()
+    {
+        if(auth()->check())
+        {
+
+            $this->completed = $this->open_lessons
+        ->where('lesson_id', $this->current->id)
+        ->where('user_id', auth()->id())
+        ->first()
+        ->completed;
+
+        }
+
+    }
 
     public function previousLesson()
     {

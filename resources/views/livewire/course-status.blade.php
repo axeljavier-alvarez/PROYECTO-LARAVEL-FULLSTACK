@@ -14,10 +14,12 @@
             </p>
         @endif
 
+        @auth
         <div class="flex items-center space-x-2">
-            <x-toggle />
-            Marcar esta unidad como completada
+            <x-toggle wire:model="completed" label="Marcar esta unidad como completada" />
         </div>
+        @endauth
+
 
         <div class="bg-white shadow-xl rounded-lg px-6 py-4 mt-2">
             <div class="flex justify-between">
@@ -89,7 +91,7 @@
                         @foreach ($section['lessons'] as $lesson)
                         <li>
                             <a href="{{ route('courses.status', [$course, $lesson['slug']]) }}" class="w-full flex">
-                                <i class="fa-solid fa-circle mt-1 mr-2"></i>
+                                <i class="fa-solid {{ $lesson['id'] == $current->id ? 'fa-circle-dot' : 'fa-circle'}} mt-1 mr-2"></i>
                                 <span>
                                     {{ $lessons->pluck('id')->search($lesson['id'] ) +1 }} .
                                     {{ $lesson['name'] }}
