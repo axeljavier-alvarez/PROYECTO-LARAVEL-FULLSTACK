@@ -177,11 +177,16 @@
             </ul>
         </aside>
 
+        @can('review_enabled', $course)
+
+        
+
         <x-button 
         wire:click="$set('review.open', true)"
         class="w-full flex justify-center">
             Calificar este curso
         </x-button>
+        @endcan
     </div>
 </div>
 
@@ -249,9 +254,17 @@
             </li>
 
         </ul>
+
+        <textarea wire:model="review.comment" class="w-full mt-4" placeholder="Mensaje ...">
+
+        </textarea>
     </x-slot>
 
     <x-slot name="footer">
+
+        <x-button wire:click="storeReview">
+            Dejar reseña
+        </x-button>
     </x-slot>
 </x-dialog-modal>
 @push('js')

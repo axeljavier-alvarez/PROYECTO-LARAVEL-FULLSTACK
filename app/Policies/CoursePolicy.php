@@ -12,4 +12,11 @@ class CoursePolicy
     {
         return $user->courses_enrolled->contains($course);
     }
+
+
+    public function review_enabled(User $user, Course $course)
+    {
+        return $user->courses_enrolled->contains($course)
+        && $user->reviews()->where('course_id', $course->id)->doesntExist();
+    }
 }
