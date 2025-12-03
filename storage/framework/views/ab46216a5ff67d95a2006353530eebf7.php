@@ -7,6 +7,10 @@
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     <div class="col-span-1 lg:col-span-2">
 
+        <!--[if BLOCK]><![endif]--><?php if(Gate::allows('enrolled', $course) || $current->is_preview || $course->price->value==0): ?>
+
+        
+
         <div wire:ignore>
 
 
@@ -43,6 +47,34 @@
             </p>
         <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
         </div>
+
+        <?php else: ?>
+
+        <div class="relative">
+            <figure>
+                <img class="w-full aspect-video object-cover object-center" src="<?php echo e($current->image); ?>" alt="">
+            </figure>
+
+            <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center">
+                <p class="text-white uppercase text-3xl font-mono font-bold">
+                    Adquiere el curso
+                </p>
+
+                <i class="fas fa-unlock text-5xl text-white">
+                
+                </i>
+
+                <a href="<?php echo e(route('courses.show', $course)); ?>" class="btn btn-red mt-4">
+                    Comprar curso
+                </a>
+
+            </div>
+            
+
+            
+        </div>
+            
+        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
         
 
         <!--[if BLOCK]><![endif]--><?php if(auth()->guard()->check()): ?>
@@ -83,8 +115,8 @@
         </div>
 
     </div>
-    <aside class="col-span-1">
-        <div class="card">
+    <div class="col-span-1">
+        <aside class="card mb-4">
             <h1 class="text-2xl leading-8 text-center mb-4">
                 <a class="hover:text-blue-600" href="<?php echo e(route('courses.show', $course)); ?>">
                     <?php echo e($course->title); ?>
@@ -163,18 +195,127 @@
                 </li>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
             </ul>
-        </div>
-    </aside>
+        </aside>
+
+        <?php if (isset($component)) { $__componentOriginald0f1fd2689e4bb7060122a5b91fe8561 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginald0f1fd2689e4bb7060122a5b91fe8561 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.button','data' => ['wire:click' => '$set(\'review.open\', true)','class' => 'w-full flex justify-center']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('button'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['wire:click' => '$set(\'review.open\', true)','class' => 'w-full flex justify-center']); ?>
+            Calificar este curso
+         <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginald0f1fd2689e4bb7060122a5b91fe8561)): ?>
+<?php $attributes = $__attributesOriginald0f1fd2689e4bb7060122a5b91fe8561; ?>
+<?php unset($__attributesOriginald0f1fd2689e4bb7060122a5b91fe8561); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginald0f1fd2689e4bb7060122a5b91fe8561)): ?>
+<?php $component = $__componentOriginald0f1fd2689e4bb7060122a5b91fe8561; ?>
+<?php unset($__componentOriginald0f1fd2689e4bb7060122a5b91fe8561); ?>
+<?php endif; ?>
+    </div>
 </div>
 
+
+
+
+<?php if (isset($component)) { $__componentOriginal49bd1c1dd878e22e0fb84faabf295a3f = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal49bd1c1dd878e22e0fb84faabf295a3f = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.dialog-modal','data' => ['wire:model' => 'review.open']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('dialog-modal'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['wire:model' => 'review.open']); ?>
+     <?php $__env->slot('title', null, []); ?> 
+        <p class="text-3xl font-semibold text-center mt-4">
+            !Tu opinion importa!
+        </p>
+     <?php $__env->endSlot(); ?>
+
+     <?php $__env->slot('content', null, []); ?> 
+        <p class="text-center mb-4">
+            ¿Como fue tu experiencia?
+        </p>
+
+        <ul 
+        x-data="{
+        rating: <?php if ((object) ('review.rating') instanceof \Livewire\WireDirective) : ?>window.Livewire.find('<?php echo e($__livewire->getId()); ?>').entangle('<?php echo e('review.rating'->value()); ?>')<?php echo e('review.rating'->hasModifier('live') ? '.live' : ''); ?><?php else : ?>window.Livewire.find('<?php echo e($__livewire->getId()); ?>').entangle('<?php echo e('review.rating'); ?>')<?php endif; ?>
+        }"
+        class="flex justify-center space-x-3 text-gray-600">
+
+            <li>
+                <button x-on:click="rating = 1">
+                <i class="fas fa-star text-2xl" x-bind:class="rating >= 1 ? 'text-yellow-500' : ''">
+
+                </i>
+                </button>
+            </li>
+
+
+            <li>
+                <button x-on:click="rating = 2">
+                <i class="fas fa-star text-2xl" x-bind:class="rating >= 2 ? 'text-yellow-500' : ''">
+
+                </i>
+                </button>
+            </li>
+
+
+            <li>
+                <button x-on:click="rating = 3">
+                <i class="fas fa-star text-2xl" x-bind:class="rating >= 3 ? 'text-yellow-500' : ''">
+
+                </i>
+                </button>
+            </li>
+
+
+            <li>
+                <button x-on:click="rating = 4">
+                <i class="fas fa-star text-2xl" x-bind:class="rating >= 4 ? 'text-yellow-500' : ''">
+
+                </i>
+                </button>
+            </li>
+            <li>
+                <button x-on:click="rating = 5">
+                <i class="fas fa-star text-2xl" x-bind:class="rating >= 5 ? 'text-yellow-500' : ''">
+
+                </i>
+                </button>
+            </li>
+
+        </ul>
+     <?php $__env->endSlot(); ?>
+
+     <?php $__env->slot('footer', null, []); ?> 
+     <?php $__env->endSlot(); ?>
+ <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal49bd1c1dd878e22e0fb84faabf295a3f)): ?>
+<?php $attributes = $__attributesOriginal49bd1c1dd878e22e0fb84faabf295a3f; ?>
+<?php unset($__attributesOriginal49bd1c1dd878e22e0fb84faabf295a3f); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal49bd1c1dd878e22e0fb84faabf295a3f)): ?>
+<?php $component = $__componentOriginal49bd1c1dd878e22e0fb84faabf295a3f; ?>
+<?php unset($__componentOriginal49bd1c1dd878e22e0fb84faabf295a3f); ?>
+<?php endif; ?>
 <?php $__env->startPush('js'); ?>
 <script src="https://cdn.plyr.io/3.8.3/plyr.js"></script>
 <script>
       const player = new Plyr('#player');
 
-      player.on('ready', event=>{
-        player.play();
-      });
+    //   player.on('ready', event=>{
+    //     player.play();
+    //   });
 
       player.on('ended', event=>{
 

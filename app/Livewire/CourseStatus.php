@@ -19,6 +19,14 @@ class CourseStatus extends Component
     public $completed = false;
     public $advance;
 
+    public $review = [
+        'open' => true,
+        'rating' => 5,
+        'comment' => ''
+
+    ];
+
+
 
     public function mount()
     {
@@ -71,10 +79,7 @@ class CourseStatus extends Component
         ->where('lesson_id', $this->current->id)
         ->where('user_id', auth()->id())
         ->where('completed', 1)
-        ->count();
-
-
-        
+        ->count();    
         // $open_lessons
         // ->where('lesson_id', $lesson['id'])
         // ->where('user_id', auth()->id())

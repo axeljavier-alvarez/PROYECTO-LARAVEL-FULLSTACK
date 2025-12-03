@@ -7,6 +7,10 @@
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     <div class="col-span-1 lg:col-span-2">
 
+        @if (Gate::allows('enrolled', $course) || $current->is_preview || $course->price->value==0)
+
+        
+
         <div wire:ignore>
 
 
@@ -46,6 +50,34 @@
             </p>
         @endif
         </div>
+
+        @else
+
+        <div class="relative">
+            <figure>
+                <img class="w-full aspect-video object-cover object-center" src="{{ $current->image }}" alt="">
+            </figure>
+
+            <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center">
+                <p class="text-white uppercase text-3xl font-mono font-bold">
+                    Adquiere el curso
+                </p>
+
+                <i class="fas fa-unlock text-5xl text-white">
+                
+                </i>
+
+                <a href="{{ route('courses.show', $course) }}" class="btn btn-red mt-4">
+                    Comprar curso
+                </a>
+
+            </div>
+            
+
+            
+        </div>
+            
+        @endif
         
 
         @auth
@@ -67,8 +99,8 @@
         </div>
 
     </div>
-    <aside class="col-span-1">
-        <div class="card">
+    <div class="col-span-1">
+        <aside class="card mb-4">
             <h1 class="text-2xl leading-8 text-center mb-4">
                 <a class="hover:text-blue-600" href="{{ route('courses.show', $course) }}">
                     {{ $course->title }}
@@ -143,18 +175,93 @@
                 </li>
                 @endforeach
             </ul>
-        </div>
-    </aside>
+        </aside>
+
+        <x-button 
+        wire:click="$set('review.open', true)"
+        class="w-full flex justify-center">
+            Calificar este curso
+        </x-button>
+    </div>
 </div>
 
+
+{{-- modal review --}}
+
+<x-dialog-modal wire:model="review.open">
+    <x-slot name="title">
+        <p class="text-3xl font-semibold text-center mt-4">
+            !Tu opinion importa!
+        </p>
+    </x-slot>
+
+    <x-slot name="content">
+        <p class="text-center mb-4">
+            ¿Como fue tu experiencia?
+        </p>
+
+        <ul 
+        x-data="{
+        rating: @entangle('review.rating')
+        }"
+        class="flex justify-center space-x-3 text-gray-600">
+
+            <li>
+                <button x-on:click="rating = 1">
+                <i class="fas fa-star text-2xl" x-bind:class="rating >= 1 ? 'text-yellow-500' : ''">
+
+                </i>
+                </button>
+            </li>
+
+
+            <li>
+                <button x-on:click="rating = 2">
+                <i class="fas fa-star text-2xl" x-bind:class="rating >= 2 ? 'text-yellow-500' : ''">
+
+                </i>
+                </button>
+            </li>
+
+
+            <li>
+                <button x-on:click="rating = 3">
+                <i class="fas fa-star text-2xl" x-bind:class="rating >= 3 ? 'text-yellow-500' : ''">
+
+                </i>
+                </button>
+            </li>
+
+
+            <li>
+                <button x-on:click="rating = 4">
+                <i class="fas fa-star text-2xl" x-bind:class="rating >= 4 ? 'text-yellow-500' : ''">
+
+                </i>
+                </button>
+            </li>
+            <li>
+                <button x-on:click="rating = 5">
+                <i class="fas fa-star text-2xl" x-bind:class="rating >= 5 ? 'text-yellow-500' : ''">
+
+                </i>
+                </button>
+            </li>
+
+        </ul>
+    </x-slot>
+
+    <x-slot name="footer">
+    </x-slot>
+</x-dialog-modal>
 @push('js')
 <script src="https://cdn.plyr.io/3.8.3/plyr.js"></script>
 <script>
       const player = new Plyr('#player');
 
-      player.on('ready', event=>{
-        player.play();
-      });
+    //   player.on('ready', event=>{
+    //     player.play();
+    //   });
 
       player.on('ended', event=>{
 
