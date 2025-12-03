@@ -137,6 +137,28 @@
 
                 </div>
 
+                
+                <div>
+                    <?php
+$__split = function ($name, $params = []) {
+    return [$name, $params];
+};
+[$__name, $__params] = $__split('manage-reviews', [
+                        'course'=> $course
+                        ]);
+
+$__html = app('livewire')->mount($__name, $__params, 'manage-reviews', $__slots ?? [], get_defined_vars());
+
+echo $__html;
+
+unset($__html);
+unset($__name);
+unset($__params);
+unset($__split);
+if (isset($__slots)) unset($__slots);
+?>
+                </div>
+
             </div>
 
             <div class="col-span-1 order-1 lg:order-2">

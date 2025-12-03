@@ -112,6 +112,13 @@
 
                 </div>
 
+                {{-- Reseñas --}}
+                <div>
+                    @livewire('manage-reviews', [
+                        'course'=> $course
+                        ], key('manage-reviews'))
+                </div>
+
             </div>
 
             <div class="col-span-1 order-1 lg:order-2">

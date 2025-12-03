@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
+
 class Course extends Model
 {
 
@@ -104,6 +105,18 @@ protected function dateOfAcquisition(): Attribute
 }
 
 
+protected function rating(): Attribute
+{
+    return new Attribute(
+        get: function () {
+
+            return $this->reviews()->count()
+            ? round($this->reviews->avg('rating'), 1) : 5;
+        }
+    );
+}
+
+
 public function getRouteKeyName():string
 {
     return 'slug';
@@ -163,5 +176,10 @@ public function getRouteKeyName():string
     {
         return $this->belongsToMany(User::class, 'course_user', 'course_id', 'user_id')
         ->withTimestamps();
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 }
