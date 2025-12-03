@@ -1,5 +1,5 @@
 <div>
-    <div class="grid grid-cols-4 gap-6 mt-5">
+    <div class="grid grid-cols-4 gap-6 mb-8 mt-8">
         <div class="col-span-1">
             <p class="text-6xl font-bold text-center">
                 {{ $course->rating }}
@@ -29,5 +29,39 @@
         </div>
 
     </div>
+
+    <ul class="space-y-6">
+        @foreach ($reviews as $review)
+        <li class="flex space-x-8">
+            <figure class="shrink-0">
+                <img
+                class="w-12 h-12 object-cover object-center rounded-full" 
+                src="{{ $review->user->profile_photo_url }}" alt="">
+            </figure>
+
+                <div class="flex-1">
+                    <p class="font-semibold">
+                        {{$review->user->name}}
+                    </p>
+
+                    <div class="flex space-x-2 items-center">
+                        <x-stars rating="{{ $review->rating }}" class="inline"/>
+                        <p class="text-sm">
+                            {{ $review->created_at->diffForHumans() }}
+                        </p>
+                    </div>
+
+                    <div>
+                    {{ 
+                       $review -> comment  
+                    }}
+                    </div>
+
+                </div>
+
+                
+        </li>
+        @endforeach
+    </ul>
     {{-- <x-stars rating="3.2" size="xl" /> --}}
 </div>

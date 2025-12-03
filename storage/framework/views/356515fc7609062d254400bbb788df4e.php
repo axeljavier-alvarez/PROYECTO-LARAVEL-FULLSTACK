@@ -1,5 +1,5 @@
 <div>
-    <div class="grid grid-cols-4 gap-6 mt-5">
+    <div class="grid grid-cols-4 gap-6 mb-8 mt-8">
         <div class="col-span-1">
             <p class="text-6xl font-bold text-center">
                 <?php echo e($course->rating); ?>
@@ -87,6 +87,60 @@
         </div>
 
     </div>
+
+    <ul class="space-y-6">
+        <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $reviews; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $review): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <li class="flex space-x-8">
+            <figure class="shrink-0">
+                <img
+                class="w-12 h-12 object-cover object-center rounded-full" 
+                src="<?php echo e($review->user->profile_photo_url); ?>" alt="">
+            </figure>
+
+                <div class="flex-1">
+                    <p class="font-semibold">
+                        <?php echo e($review->user->name); ?>
+
+                    </p>
+
+                    <div class="flex space-x-2 items-center">
+                        <?php if (isset($component)) { $__componentOriginale32d02d1a95a04916bc939ee53f28428 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginale32d02d1a95a04916bc939ee53f28428 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.stars','data' => ['rating' => ''.e($review->rating).'','class' => 'inline']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('stars'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['rating' => ''.e($review->rating).'','class' => 'inline']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginale32d02d1a95a04916bc939ee53f28428)): ?>
+<?php $attributes = $__attributesOriginale32d02d1a95a04916bc939ee53f28428; ?>
+<?php unset($__attributesOriginale32d02d1a95a04916bc939ee53f28428); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginale32d02d1a95a04916bc939ee53f28428)): ?>
+<?php $component = $__componentOriginale32d02d1a95a04916bc939ee53f28428; ?>
+<?php unset($__componentOriginale32d02d1a95a04916bc939ee53f28428); ?>
+<?php endif; ?>
+                        <p class="text-sm">
+                            <?php echo e($review->created_at->diffForHumans()); ?>
+
+                        </p>
+                    </div>
+
+                    <div>
+                    <?php echo e($review -> comment); ?>
+
+                    </div>
+
+                </div>
+
+                
+        </li>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+    </ul>
     
 </div>
 <?php /**PATH C:\laragon\www\codersfree\resources\views/livewire/manage-reviews.blade.php ENDPATH**/ ?>
