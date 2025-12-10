@@ -80,7 +80,7 @@ class CourseStatus extends Component
         ->where('lesson_id', $this->current->id)
         ->where('user_id', auth()->id())
         ->where('completed', 1)
-        ->count();    
+        ->count();
         // $open_lessons
         // ->where('lesson_id', $lesson['id'])
         // ->where('user_id', auth()->id())
@@ -93,14 +93,14 @@ class CourseStatus extends Component
     }
 
 
-    // nuevo metodo 
+    // nuevo metodo
     public function setAdvance()
     {
         $this->advance = round($this->open_lessons
         ->where('completed', 1)
         ->count() * 100 / ($this->lessons->count()));
 
-        
+
     }
 
     public function previousLesson()
@@ -140,7 +140,7 @@ class CourseStatus extends Component
             'review.rating' => 'required',
             'review.comment' => 'required'
         ]);
-        
+
         Review::create([
             'user_id' => auth()->id(),
             'course_id' => $this->course->id,

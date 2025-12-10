@@ -103,8 +103,8 @@
         <li class="flex space-x-8">
             <figure class="shrink-0">
                 <img
-                    class="w-12 h-12 object-cover object-center rounded-full" 
-                    src="<?php echo e($review->user->profile_photo_url); ?>" 
+                    class="w-12 h-12 object-cover object-center rounded-full"
+                    src="<?php echo e($review->user->profile_photo_url); ?>"
                     alt="">
             </figure>
 
@@ -169,14 +169,14 @@
                      <?php $__env->slot('content', null, []); ?> 
                         <?php if (isset($component)) { $__componentOriginal68cb1971a2b92c9735f83359058f7108 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal68cb1971a2b92c9735f83359058f7108 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.dropdown-link','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.dropdown-link','data' => ['wire:click' => 'edit('.e($review).')']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('dropdown-link'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes([]); ?>
+<?php $component->withAttributes(['wire:click' => 'edit('.e($review).')']); ?>
                             Editar
                          <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
@@ -187,18 +187,18 @@
 <?php if (isset($__componentOriginal68cb1971a2b92c9735f83359058f7108)): ?>
 <?php $component = $__componentOriginal68cb1971a2b92c9735f83359058f7108; ?>
 <?php unset($__componentOriginal68cb1971a2b92c9735f83359058f7108); ?>
-<?php endif; ?>  
+<?php endif; ?>
 
                         <?php if (isset($component)) { $__componentOriginal68cb1971a2b92c9735f83359058f7108 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal68cb1971a2b92c9735f83359058f7108 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.dropdown-link','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.dropdown-link','data' => ['wire:click' => 'delete('.e($review).')']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('dropdown-link'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes([]); ?>
+<?php $component->withAttributes(['wire:click' => 'delete('.e($review).')']); ?>
                             Eliminar
                          <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
@@ -209,7 +209,7 @@
 <?php if (isset($__componentOriginal68cb1971a2b92c9735f83359058f7108)): ?>
 <?php $component = $__componentOriginal68cb1971a2b92c9735f83359058f7108; ?>
 <?php unset($__componentOriginal68cb1971a2b92c9735f83359058f7108); ?>
-<?php endif; ?>  
+<?php endif; ?>
 
                      <?php $__env->endSlot(); ?>
                  <?php echo $__env->renderComponent(); ?>
@@ -227,5 +227,119 @@
         </li>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
     </ul>
+
+    <!-- nuevo xd -->
+    <?php if (isset($component)) { $__componentOriginal49bd1c1dd878e22e0fb84faabf295a3f = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal49bd1c1dd878e22e0fb84faabf295a3f = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.dialog-modal','data' => ['wire:model' => 'reviewEdit.open']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('dialog-modal'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['wire:model' => 'reviewEdit.open']); ?>
+     <?php $__env->slot('title', null, []); ?> 
+        <p class="text-3xl font-semibold text-center mt-4">
+            !Tu opinion importa!
+        </p>
+     <?php $__env->endSlot(); ?>
+
+     <?php $__env->slot('content', null, []); ?> 
+        <p class="text-center mb-4">
+            ¿Como fue tu experiencia?
+        </p>
+
+        <ul
+        x-data="{
+        rating: <?php if ((object) ('reviewEdit.rating') instanceof \Livewire\WireDirective) : ?>window.Livewire.find('<?php echo e($__livewire->getId()); ?>').entangle('<?php echo e('reviewEdit.rating'->value()); ?>')<?php echo e('reviewEdit.rating'->hasModifier('live') ? '.live' : ''); ?><?php else : ?>window.Livewire.find('<?php echo e($__livewire->getId()); ?>').entangle('<?php echo e('reviewEdit.rating'); ?>')<?php endif; ?>
+        }"
+        class="flex justify-center space-x-3 text-gray-600">
+
+            <li>
+                <button x-on:click="rating = 1">
+                <i class="fas fa-star text-2xl" x-bind:class="rating >= 1 ? 'text-yellow-500' : ''">
+
+                </i>
+                </button>
+            </li>
+
+
+            <li>
+                <button x-on:click="rating = 2">
+                <i class="fas fa-star text-2xl" x-bind:class="rating >= 2 ? 'text-yellow-500' : ''">
+
+                </i>
+                </button>
+            </li>
+
+
+            <li>
+                <button x-on:click="rating = 3">
+                <i class="fas fa-star text-2xl" x-bind:class="rating >= 3 ? 'text-yellow-500' : ''">
+
+                </i>
+                </button>
+            </li>
+
+
+            <li>
+                <button x-on:click="rating = 4">
+                <i class="fas fa-star text-2xl" x-bind:class="rating >= 4 ? 'text-yellow-500' : ''">
+
+                </i>
+                </button>
+            </li>
+            <li>
+                <button x-on:click="rating = 5">
+                <i class="fas fa-star text-2xl" x-bind:class="rating >= 5 ? 'text-yellow-500' : ''">
+
+                </i>
+                </button>
+            </li>
+
+        </ul>
+
+        <textarea wire:model="reviewEdit.comment" class="w-full mt-4" placeholder="Mensaje ...">
+
+        </textarea>
+     <?php $__env->endSlot(); ?>
+
+     <?php $__env->slot('footer', null, []); ?> 
+
+        <?php if (isset($component)) { $__componentOriginald0f1fd2689e4bb7060122a5b91fe8561 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginald0f1fd2689e4bb7060122a5b91fe8561 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.button','data' => ['wire:click' => 'update']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('button'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['wire:click' => 'update']); ?>
+            Actualizar reseña
+         <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginald0f1fd2689e4bb7060122a5b91fe8561)): ?>
+<?php $attributes = $__attributesOriginald0f1fd2689e4bb7060122a5b91fe8561; ?>
+<?php unset($__attributesOriginald0f1fd2689e4bb7060122a5b91fe8561); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginald0f1fd2689e4bb7060122a5b91fe8561)): ?>
+<?php $component = $__componentOriginald0f1fd2689e4bb7060122a5b91fe8561; ?>
+<?php unset($__componentOriginald0f1fd2689e4bb7060122a5b91fe8561); ?>
+<?php endif; ?>
+     <?php $__env->endSlot(); ?>
+ <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal49bd1c1dd878e22e0fb84faabf295a3f)): ?>
+<?php $attributes = $__attributesOriginal49bd1c1dd878e22e0fb84faabf295a3f; ?>
+<?php unset($__attributesOriginal49bd1c1dd878e22e0fb84faabf295a3f); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal49bd1c1dd878e22e0fb84faabf295a3f)): ?>
+<?php $component = $__componentOriginal49bd1c1dd878e22e0fb84faabf295a3f; ?>
+<?php unset($__componentOriginal49bd1c1dd878e22e0fb84faabf295a3f); ?>
+<?php endif; ?>
+
+
 </div>
 <?php /**PATH C:\laragon\www\codersfree\resources\views/livewire/manage-reviews.blade.php ENDPATH**/ ?>
