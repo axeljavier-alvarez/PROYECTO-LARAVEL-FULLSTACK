@@ -71,4 +71,12 @@ class ManageReviews extends Component
 
 
     }
+
+    public function delete(Review $review)
+    {
+        $review->delete();
+        $this->reviews = Review::where('course_id',  $this->course->id)
+        ->with('user')
+        ->get();
+    }
 }

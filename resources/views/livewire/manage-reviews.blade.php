@@ -67,6 +67,7 @@
                 </div>
             </div>
 
+            @if (auth()->check() && $review->user_id === auth()->id())
             <div class="shrink-0">
                 <x-dropdown>
                     <x-slot name="trigger">
@@ -89,6 +90,8 @@
                     </x-slot>
                 </x-dropdown>
             </div>
+
+              @endif
 
         </li>
         @endforeach

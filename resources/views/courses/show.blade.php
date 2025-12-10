@@ -113,12 +113,16 @@
                 </div>
 
                 {{-- Reseñas --}}
-                <div>
+
+                @if ($course->reviews->count())
+                     <div>
                     @livewire('manage-reviews', [
                         'course'=> $course
                         ], key('manage-reviews'))
                 </div>
 
+                @endif
+               
             </div>
 
             <div class="col-span-1 order-1 lg:order-2">

@@ -33,6 +33,9 @@ class DatabaseSeeder extends Seeder
         CourseSeeder::class,
         ClearVideosSeeder::class,
 
+        PermissionSeeder::class,
+        RoleSeeder::class
+
     ]);
 }
 
