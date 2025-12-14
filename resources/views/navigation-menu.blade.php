@@ -80,7 +80,12 @@
                                 <x-dropdown-link href="{{ route('courses.myCourses') }}">
                                     Mis cursos
                                 </x-dropdown-link>
-                                
+                                <x-dropdown-link href="{{ route('instructor.courses.index') }}">
+                                    Instructor
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('admin.dashboard') }}">
+                                    Administrador
+                                </x-dropdown-link>
                                 <form method="POST" action="{{ route('logout') }}" x-data>
                                     @csrf
                                     <x-dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();">Log Out</x-dropdown-link>
