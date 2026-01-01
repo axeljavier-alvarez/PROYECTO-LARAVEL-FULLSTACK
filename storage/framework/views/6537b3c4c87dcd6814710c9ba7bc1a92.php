@@ -1,5 +1,5 @@
 <?php
-   
+
    $links = [
       [
          'name' => 'Dashboard',
@@ -17,8 +17,8 @@
 [
          'name' => 'Usuarios',
          'icon' => 'fa-solid fa-users',
-         'route' => '',
-         'active' =>  false
+         'route' => route('admin.users.index'),
+         'active' =>  request()->routeIs('admin.users.*')
 ],
 
 [
@@ -45,7 +45,7 @@
 
 ?>
 
-<aside id="logo-sidebar" 
+<aside id="logo-sidebar"
 
 class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
  :class="{
@@ -59,28 +59,28 @@ aria-label="Sidebar">
 
       <ul class="space-y-2 font-medium">
 
-         <?php $__currentLoopData = $links; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $link): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
+         <?php $__currentLoopData = $links; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $link): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
          <li>
          <?php if(isset($link['header'])): ?>
          <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase">
             <?php echo e($link['header']); ?>
 
          </div>
-         <?php else: ?> 
+         <?php else: ?>
            <?php if(isset($link['submenu'])): ?>
 
            <div x-data="{
            open: <?php echo e($link['active'] ? 'true' : 'false'); ?>
 
            }">
-            
+
             <button class="flex items-center w-full p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group <?php echo e($link['active'] ? 'bg-gray-100' : ''); ?>"
             x-on:click="open =! open">
 
    <span class="inline-flex w-6 h-6 justify-center items-center">
 
        <i class="<?php echo e($link['icon']); ?> text-gray-500"></i>
-   </span> 
+   </span>
 
    <span class="text-left ms-3 flex-1">
        <?php echo e($link['name']); ?>
@@ -117,7 +117,7 @@ aria-label="Sidebar">
            </div>
               <?php else: ?>
           <a href="<?php echo e($link['route']); ?>" class="flex items-center
-            p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 
+            p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100
             dark:hover:bg-gray-700 group <?php echo e($link['active'] ? 'bg-gray-100' : ''); ?>">
                <span class="inline-flex w-6 h-6 justify-center items-center">
                   <i class=" <?php echo e($link['icon']); ?> text-gray-500"></i>
@@ -133,8 +133,9 @@ aria-label="Sidebar">
 
          <?php endif; ?>
          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-         
-         
+
+
       </ul>
    </div>
-</aside><?php /**PATH C:\laragon\www\codersfree\resources\views/layouts/includes/admin/sidebar.blade.php ENDPATH**/ ?>
+</aside>
+<?php /**PATH C:\laragon\www\codersfree\resources\views/layouts/includes/admin/sidebar.blade.php ENDPATH**/ ?>

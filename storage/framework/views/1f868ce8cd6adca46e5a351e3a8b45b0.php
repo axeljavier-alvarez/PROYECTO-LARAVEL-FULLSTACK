@@ -1,7 +1,10 @@
 <?php $attributes ??= new \Illuminate\View\ComponentAttributeBag;
 
 $__newAttributes = [];
-$__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames((['breadcrumb' => []]));
+$__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames(([
+    'breadcrumb' => [],
+    'action' => null,
+    ]));
 
 foreach ($attributes->all() as $__key => $__value) {
     if (in_array($__key, $__propNames)) {
@@ -16,7 +19,10 @@ $attributes = new \Illuminate\View\ComponentAttributeBag($__newAttributes);
 unset($__propNames);
 unset($__newAttributes);
 
-foreach (array_filter((['breadcrumb' => []]), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
+foreach (array_filter(([
+    'breadcrumb' => [],
+    'action' => null,
+    ]), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
     $$__key = $$__key ?? $__value;
 }
 
@@ -62,7 +68,18 @@ unset($__defined_vars, $__key, $__value); ?>
 <div class="p-4 sm:ml-64">
 
    <div class="mt-14">
+
+    <div class="flex items-center">
        <?php echo $__env->make('layouts.includes.admin.breadcrumb', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+
+       <?php if(isset($action)): ?>
+          <div class="ml-auto">
+             <?php echo e($action); ?>
+
+          </div>
+       <?php endif; ?>
+    </div>
+
    <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
       <div class="w-full">
 
@@ -83,6 +100,25 @@ unset($__defined_vars, $__key, $__value); ?>
 <?php echo $__env->yieldPushContent('modals'); ?>
 
         <?php echo \Livewire\Mechanisms\FrontendAssets\FrontendAssets::scripts(); ?>
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script>
+
+            Livewire.on('swal', data=>{
+
+                // console.log(data[0])
+                Swal.fire(data[0]);
+            });
+        </script>
+
+        <?php if(session('swal')): ?>
+        <script>
+            Swal.fire(<?php echo json_encode(session('swal')); ?>);
+            </script>
+        <?php endif; ?>
 
 </body>
 </html>

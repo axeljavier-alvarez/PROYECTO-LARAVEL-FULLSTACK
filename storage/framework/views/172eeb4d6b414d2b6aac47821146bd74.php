@@ -302,7 +302,6 @@
             </div>
         </div>
     </div>
-
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
@@ -373,7 +372,6 @@
 <?php unset($__componentOriginald69b52d99510f1e7cd3d80070b28ca18); ?>
 <?php endif; ?>
         </div>
-
         <!-- Responsive User Options -->
         <!--[if BLOCK]><![endif]--><?php if(auth()->guard()->check()): ?>
             <div class="pt-4 pb-1 border-t border-gray-200">

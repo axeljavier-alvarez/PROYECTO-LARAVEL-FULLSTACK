@@ -1,4 +1,7 @@
-@props(['breadcrumb' => []])
+@props([
+    'breadcrumb' => [],
+    'action' => null,
+    ])
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -33,7 +36,17 @@
 <div class="p-4 sm:ml-64">
 
    <div class="mt-14">
+
+    <div class="flex items-center">
        @include('layouts.includes.admin.breadcrumb')
+
+       @isset($action)
+          <div class="ml-auto">
+             {{ $action }}
+          </div>
+       @endisset
+    </div>
+
    <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
       <div class="w-full">
 
@@ -53,5 +66,24 @@
 @stack('modals')
 
         @livewireScripts
+
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script>
+
+            Livewire.on('swal', data=>{
+
+                // console.log(data[0])
+                Swal.fire(data[0]);
+            });
+        </script>
+
+        @if(session('swal'))
+        <script>
+            Swal.fire({!! json_encode(session('swal')) !!});
+            </script>
+        @endif
+
 </body>
 </html>

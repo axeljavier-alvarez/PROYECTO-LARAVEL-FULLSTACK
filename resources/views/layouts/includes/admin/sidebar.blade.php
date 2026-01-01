@@ -1,5 +1,5 @@
 @php
-   
+
    $links = [
       [
          'name' => 'Dashboard',
@@ -17,8 +17,8 @@
 [
          'name' => 'Usuarios',
          'icon' => 'fa-solid fa-users',
-         'route' => '',
-         'active' =>  false
+         'route' => route('admin.users.index'),
+         'active' =>  request()->routeIs('admin.users.*')
 ],
 
 [
@@ -45,7 +45,7 @@
 
 @endphp
 
-<aside id="logo-sidebar" 
+<aside id="logo-sidebar"
 
 class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
  :class="{
@@ -59,26 +59,26 @@ aria-label="Sidebar">
 
       <ul class="space-y-2 font-medium">
 
-         @foreach ($links as $link) 
+         @foreach ($links as $link)
          <li>
          @isset($link['header'])
          <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase">
             {{ $link['header'] }}
          </div>
-         @else 
+         @else
            @isset($link['submenu'])
 
            <div x-data="{
            open: {{ $link['active'] ? 'true' : 'false' }}
            }">
-            
+
             <button class="flex items-center w-full p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ $link['active'] ? 'bg-gray-100' : '' }}"
             x-on:click="open =! open">
 
    <span class="inline-flex w-6 h-6 justify-center items-center">
 
        <i class="{{ $link['icon'] }} text-gray-500"></i>
-   </span> 
+   </span>
 
    <span class="text-left ms-3 flex-1">
        {{ $link['name'] }}
@@ -113,7 +113,7 @@ aria-label="Sidebar">
            </div>
               @else
           <a href="{{ $link['route'] }}" class="flex items-center
-            p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 
+            p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100
             dark:hover:bg-gray-700 group {{ $link['active'] ? 'bg-gray-100' : '' }}">
                <span class="inline-flex w-6 h-6 justify-center items-center">
                   <i class=" {{ $link['icon'] }} text-gray-500"></i>
@@ -128,8 +128,8 @@ aria-label="Sidebar">
 
          @endisset
          @endforeach
-         
-         
+
+
       </ul>
    </div>
 </aside>
