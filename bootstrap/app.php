@@ -18,7 +18,9 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->name('admin.')
                 ->group(base_path('routes/admin.php'));
 
-            Route::middleware(['web', 'auth'])
+
+                // ruta protegida
+            Route::middleware(['web', 'auth', 'can:manage_courses'])
                 ->prefix('instructor')
                 ->name('instructor.')
                 ->group(base_path('routes/instructor.php'));

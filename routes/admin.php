@@ -9,13 +9,18 @@ Route::get('', function(){
 
     return view('admin.dashboard');
 
-})->name('dashboard');
+})
+->middleware('can:access_dashboard')
+->name('dashboard');
 
 // nueva ruta
-Route::resource('users', UserController::class);
+Route::resource('users', UserController::class)
+->middleware('can:manage_users');
 // ruta para roles
-Route::resource('roles', RoleController::class);
+Route::resource('roles', RoleController::class)
+->middleware('can:manage_roles');
 
-Route::resource('permissions', PermissionController::class);
+Route::resource('permissions', PermissionController::class)
+->middleware('can:manage_permissions');
 
 

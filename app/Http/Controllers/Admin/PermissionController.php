@@ -32,7 +32,19 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|unique:permissions'
+        ]);
+
+        Permission::create($data);
+
+        session()->flash('swal', [
+            'icon' => 'success',
+            'title' => '¡Permiso creado!',
+            'text' => 'El permiso se ha creado correctamente'
+        ]);
+
+        return redirect()->route('admin.permissions.index');
     }
 
     /**
@@ -56,7 +68,21 @@ class PermissionController extends Controller
      */
     public function update(Request $request, Permission $permission)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|unique:permissions,name,'.$permission->id,
+        ]);
+
+        $permission->update($data);
+
+        session()->flash('swal', [
+            'icon' => 'success',
+            'title' => '¡Permiso actualizado!',
+            'text' => 'El permiso se ha actualizado correctamente'
+        ]);
+
+        return redirect()->route('admin.permissions.index', $permission);
+
+
     }
 
     /**
@@ -64,6 +90,14 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        //
+        $permission->delete();
+
+        session()->flash('swal', [
+            'icon' => 'success',
+            'title' => '!Permiso eliminado!',
+            'text' => 'El permiso se ha eliminado correctamente'
+        ]);
+
+        return redirect()->route('admin.permissions.index');
     }
 }
