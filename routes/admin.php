@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,3 +12,7 @@ Route::get('', function(){
 
 // nueva ruta
 Route::resource('users', UserController::class);
+// ruta para roles
+Route::resource('roles', RoleController::class);
+
+

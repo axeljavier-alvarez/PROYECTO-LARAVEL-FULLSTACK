@@ -22,6 +22,13 @@
 ],
 
 [
+    'name' => 'Roles',
+    'icon' => 'fa-solid fa-user-tag',
+    'route' => route('admin.roles.index'),
+    'active'=> request()->routeIs('admin.roles.*'),
+],
+
+[
          'name' => 'Empresa',
          'icon' => 'fa-solid fa-building',
          'active' =>  false,

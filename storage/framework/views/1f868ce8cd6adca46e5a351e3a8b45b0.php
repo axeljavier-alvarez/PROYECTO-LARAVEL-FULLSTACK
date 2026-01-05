@@ -49,7 +49,7 @@ unset($__defined_vars, $__key, $__value); ?>
         <!-- Font -->
         <script src="https://kit.fontawesome.com/e2d71e4ca2.js" crossorigin="anonymous"></script>
 
-
+        <?php echo $__env->yieldPushContent('css'); ?>
         <!-- Scripts -->
         <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
 
@@ -119,6 +119,12 @@ unset($__defined_vars, $__key, $__value); ?>
             Swal.fire(<?php echo json_encode(session('swal')); ?>);
             </script>
         <?php endif; ?>
+
+        <?php echo $__env->yieldPushContent('css'); ?>
+
+
+        <?php echo $__env->yieldPushContent('js'); ?>
+
 
 </body>
 </html>

@@ -18,7 +18,7 @@
         <!-- Font -->
         <script src="https://kit.fontawesome.com/e2d71e4ca2.js" crossorigin="anonymous"></script>
 
-
+        @stack('css')
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -84,6 +84,12 @@
             Swal.fire({!! json_encode(session('swal')) !!});
             </script>
         @endif
+
+        @stack('css')
+
+
+        @stack('js')
+
 
 </body>
 </html>

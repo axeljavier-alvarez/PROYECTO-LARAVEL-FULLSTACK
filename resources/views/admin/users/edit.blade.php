@@ -56,13 +56,73 @@
            <x-input type="password" name="password_confirmation"  class="w-full"/>
 
         </div>
-        <div class="flex justify-end">
+
+
+
+        <!-- Editar roles -->
+        <div class="mb-4">
+            <x-label class="mb-1">
+                Roles
+            </x-label>
+
+            <ul>
+                @foreach ( $roles as $role )
+                <li>
+                    <label>
+                        <x-checkbox name="roles[]" value="{{ $role->id }}" :checked="in_array($role->id, old('roles', $user->roles->pluck('id')->toArray()))"
+                        />
+                        {{ $role->name }}
+
+                    </label>
+                </li>
+                @endforeach
+            </ul>
+
+        </div>
+
+        <div class="flex justify-end space-x-2">
+<x-danger-button onclick="confirmDelete()">
+                Eliminar
+            </x-danger-button>
             <x-button>
                 Actualizar
             </x-button>
         </div>
     </form>
 </div>
+
+<form action="{{ route('admin.users.destroy', $user) }}" method="POST" id="deleteForm">
+    @csrf
+    @method('DELETE')
+
+</form>
+
+@push('js')
+<script>
+
+    function confirmDelete()
+    {
+
+Swal.fire({
+  title: "Estás seguro?",
+  text: "No podrás revertir esto!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Si, bórralo!",
+  cancelButtonText: "Cancelar"
+}).then((result) => {
+  if (result.isConfirmed) {
+    // eliminar usuario
+
+    document.getElementById('deleteForm').submit();
+  }
+});
+    }
+
+</script>
+@endpush
 
 
 </x-admin-layout>

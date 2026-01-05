@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+
 
 class UserController extends Controller
 {
@@ -21,7 +23,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');
+        $roles = Role::all();
+
+        // return $roles;
+
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -35,11 +41,20 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|min:6|confirmed'
+            'password' => 'nullable|min:6|confirmed',
+            'roles'=>'nullable|array'
         ]);
 
-        User::create($data);
+        $user = User::create($data);
         // return $data;
+
+        if(isset($data['roles'])){
+            $user->roles()->sync($data['roles']);
+        }
+        /* else {
+            $user->roles()->detach();
+        } */
+
 
         return redirect()->route('admin.users.index');
     }
@@ -57,7 +72,11 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin.users.edit', compact('user'));
+
+        // return $user;
+        // return $user->roles->pluck('id');
+        $roles = Role::all();
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -69,7 +88,8 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|min:6|confirmed'
+            'password' => 'nullable|min:6|confirmed',
+            'roles' => 'nullable|array'
         ]);
 
         $user->name = $data['name'];
@@ -79,7 +99,25 @@ class UserController extends Controller
             $user->password = bcrypt($data['password']);
         }
 
+
+
+
         $user->save();
+
+
+         // nuevo codigo
+        //  if(isset($data['roles'])){
+        //     $user->roles()->sync($data['roles']);
+        // }
+
+        // Verifica si el formulario envió el campo roles.
+        if(isset($data['roles'])){
+            // verifica campo roles y asigna solo esos al user
+            $user->roles()->sync($data['roles']);
+        } else {
+            // asigna solo roles seleccionados al user y elimina los que no van en array
+            $user->roles()->detach();
+        }
 
         session()->flash('swal', [
             'icon' => 'success',
@@ -97,6 +135,15 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        // return "Eliminado";
+
+        $user->delete();
+        session()->flash('swal', [
+            'icon' => 'success',
+            'title' => 'Usuario eliminado',
+            'text' => 'El usuario se ha eliminado correctamente'
+        ]);
+
+        return redirect()->route('admin.users.index');
     }
 }
